@@ -19,9 +19,7 @@ class Title constructor(title: String): SimpleValueObject<String>(title) {
             throw TitleTooLongException(maxTitleLength)
     }
 
-    class NoEmptyTitleException : DomainException("Title must not be empty") {
-    }
+    class NoEmptyTitleException : DomainException("Title must not be empty")
 
-    class TitleTooLongException(maxTitleLength: Int) : DomainException("Title mus be shorter than $maxTitleLength characters") {
-    }
+    class TitleTooLongException(maxTitleLength: Int) : DomainException("Title mus be shorter than $maxTitleLength characters")
 }

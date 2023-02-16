@@ -15,6 +15,5 @@ class Body(body: String) : SimpleValueObject<String>(body) {
             throw BodyTooLongException(maxBodyLength)
     }
 
-    class BodyTooLongException(maxBodyLength: Int) : DomainException("Body mus be shorter than $maxBodyLength characters") {
-    }
+    class BodyTooLongException(maxBodyLength: Int) : DomainException("Body mus be shorter than $maxBodyLength characters")
 }

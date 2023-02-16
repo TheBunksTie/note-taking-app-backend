@@ -23,12 +23,9 @@ class Tag(tag: String) : SimpleValueObject<String>(tag) {
 
     }
 
-    class NoEmptyTagException : DomainException("Tag must not be empty") {
-    }
+    class NoEmptyTagException : DomainException("Tag must not be empty")
 
-    class TagTooLongException(maxTagLength: Int) : DomainException("Tag must be shorter than $maxTagLength characters") {
-    }
+    class TagTooLongException(maxTagLength: Int) : DomainException("Tag must be shorter than $maxTagLength characters")
 
-    class NoBlanksInTagException : DomainException("Tag must not contain any blank characters") {
-    }
+    class NoBlanksInTagException : DomainException("Tag must not contain any blank characters")
 }

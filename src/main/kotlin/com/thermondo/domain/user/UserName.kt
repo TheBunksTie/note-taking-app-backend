@@ -22,13 +22,10 @@ class UserName(userName: String) : SimpleValueObject<String>(userName) {
             throw NoBlanksInUserNameException()
     }
 
-    class NoEmptyUserNameException : DomainException("User name must not be empty") {
-    }
+    class NoEmptyUserNameException : DomainException("User name must not be empty")
 
-    class UserNameTooLongException(maxUserNameLength: Int) : DomainException("User name mus be shorter than $maxUserNameLength characters") {
-    }
+    class UserNameTooLongException(maxUserNameLength: Int) : DomainException("User name mus be shorter than $maxUserNameLength characters")
 
-    class NoBlanksInUserNameException : DomainException("User name must not contain any blank characters") {
-    }
+    class NoBlanksInUserNameException : DomainException("User name must not contain any blank characters")
 }
 

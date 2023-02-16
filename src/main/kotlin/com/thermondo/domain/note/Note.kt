@@ -18,7 +18,7 @@ import com.thermondo.domain.user.User
 class Note(id: Id,
            createdAt: CreatedAt,
            changedAt: ChangedAt,
-           var title: Title?,
+           var title: Title,
            var body: Body?,
            var tags: List<Tag>,
            var author: User,
@@ -88,14 +88,18 @@ class Note(id: Id,
         }
 
         fun create() : Note {
+            if (title == null)
+                throw NoTitleException()
+
             if (author == null)
                 throw NoAuthorException()
 
-            return Note(id!!, createdAt!!, changedAt!!, title, body, tags!!, author!!, type!!)
+            return Note(id!!, createdAt!!, changedAt!!, title!!, body, tags!!, author!!, type!!)
         }
 
-        class NoAuthorException : DomainException("A note must have an authoring user") {
-        }
+        class NoTitleException : DomainException("A note must have a title")
+
+        class NoAuthorException : DomainException("A note must have an authoring user")
     }
 }
 

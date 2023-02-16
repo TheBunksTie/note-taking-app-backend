@@ -37,22 +37,15 @@ class Password(password: String) : SimpleValueObject<String>(password) {
             throw MustContainDigit()
     }
 
-    class NoEmptyPasswordException : DomainException("Password must not be empty") {
-    }
+    class NoEmptyPasswordException : DomainException("Password must not be empty")
 
-    class PasswordTooLongException(maxPasswordLength: Int) : DomainException("Title mus be shorter than $maxPasswordLength characters") {
-    }
+    class PasswordTooLongException(maxPasswordLength: Int) : DomainException("Title mus be shorter than $maxPasswordLength characters")
 
-    class NoBlanksInPasswordException : DomainException("Password must not contain any blank characters") {
-    }
+    class NoBlanksInPasswordException : DomainException("Password must not contain any blank characters")
 
-    class MustContainLowerCaseCharacter : DomainException("Password must contain at least one lower case letter") {
-    }
+    class MustContainLowerCaseCharacter : DomainException("Password must contain at least one lower case letter")
 
-    class MustContainUpperCaseCharacter : DomainException("Password must contain at least one upper case letter") {
-    }
+    class MustContainUpperCaseCharacter : DomainException("Password must contain at least one upper case letter")
 
-    class MustContainDigit : DomainException("Password must contain at least one digit") {
-    }
-
+    class MustContainDigit : DomainException("Password must contain at least one digit")
 }
