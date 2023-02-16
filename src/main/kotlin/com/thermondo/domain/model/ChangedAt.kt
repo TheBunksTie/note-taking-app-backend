@@ -15,5 +15,9 @@ class ChangedAt private constructor(changedAt: LocalDateTime) : SimpleValueObjec
         fun fromDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) : ChangedAt {
             return ChangedAt(LocalDateTime.of(year, month, day, hour, minute, second))
         }
+
+        fun fromString(changedAtString: String) : ChangedAt {
+            return ChangedAt(LocalDateTime.parse(changedAtString))
+        }
     }
 }

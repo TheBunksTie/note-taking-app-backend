@@ -16,6 +16,10 @@ class CreatedAt private constructor(createdAt: LocalDateTime) : SimpleValueObjec
         fun fromDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) : CreatedAt {
             return CreatedAt(LocalDateTime.of(year, month, day, hour, minute, second))
         }
+
+        fun fromString(createdAtString: String) : CreatedAt {
+            return CreatedAt(LocalDateTime.parse(createdAtString))
+        }
     }
 }
 

@@ -7,7 +7,7 @@ import com.thermondo.domain.abstraction.IValueObject
  * @param T type of the value that the value object is holding
  * @property value value that the value object is holding
  */
-abstract class SimpleValueObject<T> protected constructor(private val value: T) : IValueObject {
+abstract class SimpleValueObject<T> protected constructor(val value: T) : IValueObject {
 
     override fun hashCode(): Int {
         return value.hashCode()
