@@ -1,0 +1,208 @@
+package com.thermondo.usecase.note
+
+import com.thermondo.domain.model.Id
+import com.thermondo.domain.note.*
+import com.thermondo.domain.user.Password
+import com.thermondo.domain.user.User
+import com.thermondo.domain.user.UserName
+import com.thermondo.persistence.note.notePersistenceModule
+import com.thermondo.persistence.user.userPersistenceModule
+import com.thermondo.usecase.note.abstraction.INoteRepository
+import com.thermondo.usecase.user.abstraction.IUserRepository
+import org.junit.Rule
+import org.junit.Test
+import org.koin.test.KoinTest
+import org.koin.test.KoinTestRule
+import org.koin.test.inject
+import kotlin.test.*
+import kotlin.test.assertNotNull
+
+class UpdateNoteTests : KoinTest {
+    private val noteRepository: INoteRepository by inject()
+    private val userRepository: IUserRepository by inject()
+
+    @get:Rule
+    val koinTestRule = KoinTestRule.create {
+        modules(userPersistenceModule, notePersistenceModule)
+    }
+
+    @Test
+    fun execute_nonExistingAuthor_returnsErrorResultModel() {
+        val nonExistingAuthorId = Id.generate()
+        val nonExistingNoteId = Id.generate()
+        val title = "My note title"
+
+        val requestModel = UpdateNote.RequestModel(
+            nonExistingNoteId.toString(),
+            title,
+            "An interesting body of a note",
+            listOf("interesting", "note"),
+            nonExistingAuthorId.toString(),
+            NoteType.PUBLIC.toString())
+
+        val updateNote = UpdateNote(noteRepository, userRepository)
+        val resultModel = updateNote.execute(requestModel)
+
+        assertFalse(resultModel.successful)
+        assertNull(resultModel.noteId)
+        assertContains(resultModel.message, title)
+        assertContains(resultModel.message, "could not be found")
+    }
+
+    @Test
+    fun execute_invalidAuthorId_returnsErrorResultModel() {
+        val nonExistingNoteId = Id.generate()
+        val invalidAuthorId = "<invalid id>"
+        val title = "My note title"
+
+        val requestModel = UpdateNote.RequestModel(
+            nonExistingNoteId.toString(),
+            title,
+            "An interesting body of a note",
+            listOf("interesting", "note"),
+            invalidAuthorId,
+            NoteType.PUBLIC.toString())
+
+        val updateNote = UpdateNote(noteRepository, userRepository)
+        val resultModel = updateNote.execute(requestModel)
+
+        assertFalse(resultModel.successful)
+        assertNull(resultModel.noteId)
+        assertContains(resultModel.message, title)
+        assertContains(resultModel.message, "Invalid id value")
+    }
+
+    @Test
+    fun execute_nonExistingNote_returnsErrorResultModel() {
+        val existingUser = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
+        val nonExistingNoteId = Id.generate()
+        val title = "My note title"
+
+        val requestModel = UpdateNote.RequestModel(
+            nonExistingNoteId.toString(),
+            title,
+            "An interesting body of a note",
+            listOf("interesting", "note"),
+            existingUser.id.toString(),
+            NoteType.PUBLIC.toString())
+
+        val updateNote = UpdateNote(noteRepository, userRepository)
+        val resultModel = updateNote.execute(requestModel)
+
+        assertFalse(resultModel.successful)
+        assertNull(resultModel.noteId)
+        assertContains(resultModel.message, title)
+        assertContains(resultModel.message, "could not be found")
+    }
+
+    @Test
+    fun execute_invalidNoteId_returnsErrorResultModel() {
+        val existingUser = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
+        val invalidNoteId = "<invalid id>"
+        val title = "My note title"
+
+        val requestModel = UpdateNote.RequestModel(
+            invalidNoteId,
+            title,
+            "An interesting body of a note",
+            listOf("interesting", "note"),
+            existingUser.id.toString(),
+            NoteType.PUBLIC.toString())
+
+        val updateNote = UpdateNote(noteRepository, userRepository)
+        val resultModel = updateNote.execute(requestModel)
+
+        assertFalse(resultModel.successful)
+        assertNull(resultModel.noteId)
+        assertContains(resultModel.message, title)
+        assertContains(resultModel.message, "Invalid id value")
+    }
+
+    @Test
+    fun execute_differentAuthor_returnsErrorResultModel() {
+        val originalAuthor = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
+        val newAuthor = userRepository.persist(User.new(UserName("user2"), Password("seCreT123")))
+
+        val title = "My note title"
+        val existingNote = noteRepository.persist(Note.new()
+            .withTitle(Title(title))
+            .withBody(Body("An interesting body of a note"))
+            .withTags(listOf(Tag("interesting"), Tag("note")))
+            .withAuthor(originalAuthor)
+            .withNoteType(NoteType.PUBLIC)
+            .create())
+
+        val requestModel = UpdateNote.RequestModel(
+            existingNote.id.toString(),
+            existingNote.title.toString(),
+            existingNote.body.toString(),
+            existingNote.tags.stream().map { t -> t.toString() }.toList(),
+            newAuthor.id.toString(),
+            existingNote.noteType.name)
+
+        val updateNote = UpdateNote(noteRepository, userRepository)
+        val resultModel = updateNote.execute(requestModel)
+
+        assertFalse(resultModel.successful)
+        assertNull(resultModel.noteId)
+        assertContains(resultModel.message, title)
+        assertContains(resultModel.message, "Modifying a note of another user ist not allowed")
+    }
+
+    @Test
+    fun execute_invalidNoteType_returnsErrorResultModel() {
+        val existingUser = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
+        val nonExistingNoteId = Id.generate()
+
+        val title = "My note title"
+        val noteType = "<invalid note type>"
+
+        val requestModel = UpdateNote.RequestModel(
+            nonExistingNoteId.toString(),
+            title,
+            "An interesting body of a note",
+            listOf("interesting", "note"),
+            existingUser.id.toString(),
+            noteType)
+
+        val updateNote = UpdateNote(noteRepository, userRepository)
+        val resultModel = updateNote.execute(requestModel)
+
+        assertFalse(resultModel.successful)
+        assertNull(resultModel.noteId)
+        assertContains(resultModel.message, title)
+        assertContains(resultModel.message, "No enum constant")
+    }
+
+    @Test
+    fun execute_validParameters_returnsSuccessResultModel() {
+        val existingUser = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
+        val existingNote = noteRepository.persist(Note.new()
+            .withTitle(Title("My note title"))
+            .withBody(Body("An interesting body of a note"))
+            .withTags(listOf(Tag("interesting"), Tag("note")))
+            .withAuthor(existingUser)
+            .withNoteType(NoteType.PUBLIC)
+            .create())
+
+        val requestModel = UpdateNote.RequestModel(
+            existingNote.id.toString(),
+            existingNote.title.toString(),
+            existingNote.body.toString(),
+            existingNote.tags.stream().map { t -> t.toString() }.toList(),
+            existingUser.id.toString(),
+            existingNote.noteType.name)
+
+        val updateNote = UpdateNote(noteRepository, userRepository)
+        val resultModel = updateNote.execute(requestModel)
+
+        assertTrue(resultModel.successful)
+        assertNotNull(resultModel.noteId)
+        assertContains(resultModel.message, existingNote.title.toString())
+        assertContains(resultModel.message, "Successfully updated note")
+
+        val updatedNote = noteRepository.getBy(existingNote.id)
+        assertNotNull(updatedNote)
+        assertTrue(updatedNote.createdAt.value < updatedNote.changedAt.value)
+    }
+}
