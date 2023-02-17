@@ -26,11 +26,14 @@ class GetNotesByAuthor(
         try {
             val authorId = Id.fromString(input.authorId)
             val author = userRepository.getBy(authorId)
-                ?: return ResultModel.errorResult(input.authorId, "User with id '${input.authorId}' could not be found")
+                ?: return ResultModel.errorResult(
+                    input.authorId, "User with id '${input.authorId}' could not be found"
+                )
 
             val authoredNotes = noteRepository
                 .getAllByAuthor(author.id)
-                .stream().map { n -> viewModelConverter.createFromT1(n) }.toList()
+                .map { n -> viewModelConverter.createFromT1(n) }
+                .toList()
 
             return ResultModel.successResult(authoredNotes, author.id.toString())
         } catch (e: Exception) {
@@ -51,9 +54,15 @@ class GetNotesByAuthor(
             }
 
             fun errorResult(authorId: String?, errorReason: String?): ResultModel {
-                val effectiveAuthorId = if (!authorId.isNullOrEmpty()) authorId else "<null or empty author id>"
-                val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
-                return ResultModel(emptyList(), false, "Unable to retrieves notes for author '$effectiveAuthorId' because of error: $effectiveErrorReason")
+                val effectiveAuthorId =
+                    if (!authorId.isNullOrEmpty()) authorId else "<null or empty author id>"
+                val effectiveErrorReason =
+                    if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
+                return ResultModel(
+                    emptyList(),
+                    false,
+                    "Unable to retrieves notes for author '$effectiveAuthorId' because of error: $effectiveErrorReason"
+                )
             }
         }
     }

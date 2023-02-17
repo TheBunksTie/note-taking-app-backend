@@ -135,7 +135,7 @@ class UpdateNoteTests : UseCaseTestBase() {
             existingNote.id.toString(),
             existingNote.title.toString(),
             existingNote.body.toString(),
-            existingNote.tags.stream().map { t -> t.toString() }.toList(),
+            existingNote.tags.map { t -> t.toString() }.toList(),
             newAuthor.id.toString(),
             existingNote.noteType.name
         )
@@ -188,11 +188,13 @@ class UpdateNoteTests : UseCaseTestBase() {
                 .create()
         )
 
+        Thread.sleep(1000)
+
         val requestModel = UpdateNote.RequestModel(
             existingNote.id.toString(),
             existingNote.title.toString(),
             existingNote.body.toString(),
-            existingNote.tags.stream().map { t -> t.toString() }.toList(),
+            existingNote.tags.map { t -> t.toString() }.toList(),
             existingUser.id.toString(),
             existingNote.noteType.name
         )

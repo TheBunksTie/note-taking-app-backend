@@ -61,7 +61,13 @@ class NotePersistenceRepository : INotePersistenceRepository {
     }
 
     private fun initTestUser(id: String, userName: String): UserPersistenceEntity {
-        return UserPersistenceEntity(id, LocalDateTime.now().toString(), LocalDateTime.now().toString(), userName, "Test1")
+        return UserPersistenceEntity(
+            id,
+            LocalDateTime.now().toString(),
+            LocalDateTime.now().toString(),
+            userName,
+            "Test1"
+        )
     }
 
     override fun persist(persistableObject: NotePersistenceEntity): NotePersistenceEntity {
@@ -83,7 +89,7 @@ class NotePersistenceRepository : INotePersistenceRepository {
     }
 
     override fun getAll(): List<NotePersistenceEntity> {
-        return noteMap.values.stream().toList().sortedBy { n -> n.createdAt }
+        return noteMap.values.sortedBy { n -> n.createdAt }
     }
 
     override fun getAllByAuthor(authorId: String): List<NotePersistenceEntity> {

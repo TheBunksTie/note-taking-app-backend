@@ -27,30 +27,42 @@ class UpdateNote(
         try {
             val authorId = Id.fromString(input.authorId)
             val author = userRepository.getBy(authorId)
-                ?: return ResultModel.errorResult(input.title, "User with id '${input.authorId}' could not be found")
+                ?: return ResultModel.errorResult(
+                    input.title,
+                    "User with id '${input.authorId}' could not be found"
+                )
 
             val noteType = NoteType.valueOf(input.noteType)
 
             val noteId = Id.fromString(input.id)
             val existingNote = noteRepository.getBy(noteId)
-                ?: return ResultModel.errorResult(input.title, "Note with id '${input.id}' could not be found")
+                ?: return ResultModel.errorResult(
+                    input.title,
+                    "Note with id '${input.id}' could not be found"
+                )
 
             if (existingNote.author != author)
-                return ResultModel.errorResult(input.title, "Modifying a note of another user ist not allowed")
+                return ResultModel.errorResult(
+                    input.title,
+                    "Modifying a note of another user ist not allowed"
+                )
 
             if (input.title != null)
                 existingNote.title = Title(input.title)
             if (input.body != null)
                 existingNote.body = Body(input.body)
 
-            existingNote.tags = input.tags.stream().map { t -> Tag(t) }.toList().toSet()
+            existingNote.tags = input.tags.map { t -> Tag(t) }.toSet()
 
             existingNote.noteType = noteType
             existingNote.changedAt = ChangedAt.now()
 
             // TODO detection if an actual value change happened and specific message if not
             val persistedExistingNote = noteRepository.persist(existingNote)
-            return ResultModel.successResult(persistedExistingNote.id.toString(), persistedExistingNote.title.toString())
+            return ResultModel.successResult(
+                persistedExistingNote.id.toString(),
+                persistedExistingNote.title.toString()
+            )
         } catch (e: Exception) {
             return ResultModel.errorResult(input.title, e.message)
         }
@@ -76,9 +88,19 @@ class UpdateNote(
             }
 
             fun errorResult(noteTitle: String?, errorReason: String?): ResultModel {
-                val effectiveNoteTitleName = if (!noteTitle.isNullOrEmpty()) noteTitle else "<null or empty note title>"
-                val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
-                return ResultModel(null, false, "Unable to update note '$effectiveNoteTitleName' because of error: $effectiveErrorReason")
+                val effectiveNoteTitleName =
+                    if (!noteTitle.isNullOrEmpty()) noteTitle
+                    else "<null or empty note title>"
+
+                val effectiveErrorReason =
+                    if (!errorReason.isNullOrEmpty()) errorReason
+                    else "<no error reason provided>"
+
+                return ResultModel(
+                    null,
+                    false,
+                    "Unable to update note '$effectiveNoteTitleName' because of error: $effectiveErrorReason"
+                )
             }
         }
     }

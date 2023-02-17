@@ -23,7 +23,7 @@ class NoteViewModelConverter : DomainViewModelConverterBase<Note, NoteViewModel>
                 source.changedAt.toString(),
                 source.title.toString(),
                 source.body.toString(),
-                source.tags.stream().map { t -> t.value }.toList().toSet(),
+                source.tags.map { t -> t.value }.toSet(),
                 IdViewModel(source.author.id.toString()),
                 source.noteType.name
             )

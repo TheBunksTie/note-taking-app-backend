@@ -55,7 +55,8 @@ abstract class TestBase : KoinTest {
         val initialNoteType = NoteType.PUBLIC
 
         return titleNames.map { t ->
-            Thread.sleep(200); noteRepository.persist(
+            Thread.sleep(200)
+            noteRepository.persist(
                 Note.new()
                     .withTitle(Title(t))
                     .withBody(body)

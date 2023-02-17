@@ -55,6 +55,6 @@ class UserPersistenceRepository : IUserPersistenceRepository {
     }
 
     override fun getAll(): List<UserPersistenceEntity> {
-        return userMap.values.stream().toList()
+        return userMap.values.toList()
     }
 }

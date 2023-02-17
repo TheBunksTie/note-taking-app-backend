@@ -26,7 +26,8 @@ class GetNotesByPublicState(
         try {
             val publicNotes = noteRepository
                 .getAllPublic()
-                .stream().map { n -> viewModelConverter.createFromT1(n) }.toList()
+                .map { n -> viewModelConverter.createFromT1(n) }
+                .toList()
 
             return ResultModel.successResult(publicNotes)
         } catch (e: Exception) {
@@ -46,8 +47,15 @@ class GetNotesByPublicState(
                 return ResultModel(notes, true, "Successfully retrieved public notes")
             }
             fun errorResult(errorReason: String?): ResultModel {
-                val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
-                return ResultModel(emptyList(), false, "Unable to retrieves public notes because of error: $effectiveErrorReason")
+                val effectiveErrorReason =
+                    if (!errorReason.isNullOrEmpty()) errorReason
+                    else "<no error reason provided>"
+
+                return ResultModel(
+                    emptyList(),
+                    false,
+                    "Unable to retrieves public notes because of error: $effectiveErrorReason"
+                )
             }
         }
     }

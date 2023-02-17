@@ -25,34 +25,34 @@ class NoteRepository(
 
         return (persistenceRepository as INotePersistenceRepository)
             .getAllByAuthor(authorIdString)
-            .stream().map { n -> converter.createFromT2(n) }
-            .toList().toList()
+            .map { n -> converter.createFromT2(n) }
+            .toList()
     }
 
     override fun getAllByTags(authorId: Id, tags: Set<Tag>): List<Note> {
         val authorIdString = authorId.toString()
-        val tagStringSet = tags.stream().map { t -> t.toString() }.toList().toSet()
+        val tagStringSet = tags.map { t -> t.toString() }.toSet()
 
         return (persistenceRepository as INotePersistenceRepository)
             .getAllByTags(authorIdString, tagStringSet)
-            .stream().map { n -> converter.createFromT2(n) }
-            .toList().toList()
+            .map { n -> converter.createFromT2(n) }
+            .toList()
     }
 
     override fun getAllByKeywords(authorId: Id, keywords: Set<Keyword>): List<Note> {
         val authorIdString = authorId.toString()
-        val keywordsStringSet = keywords.stream().map { t -> t.toString() }.toList().toSet()
+        val keywordsStringSet = keywords.map { t -> t.toString() }.toSet()
 
         return (persistenceRepository as INotePersistenceRepository)
             .getAllByKeywords(authorIdString, keywordsStringSet)
-            .stream().map { n -> converter.createFromT2(n) }
-            .toList().toList()
+            .map { n -> converter.createFromT2(n) }
+            .toList()
     }
 
     override fun getAllPublic(): List<Note> {
         return (persistenceRepository as INotePersistenceRepository)
             .getAllPublic()
-            .stream().map { n -> converter.createFromT2(n) }
-            .toList().toList()
+            .map { n -> converter.createFromT2(n) }
+            .toList()
     }
 }

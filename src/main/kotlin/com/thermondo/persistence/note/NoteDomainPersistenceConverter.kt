@@ -31,7 +31,7 @@ class NoteDomainPersistenceConverter(private val userConverter: IUserDomainPersi
                 source.changedAt.toString(),
                 source.title.toString(),
                 source.body.toString(),
-                source.tags.stream().map { t -> t.value }.toList().toSet(),
+                source.tags.map { t -> t.value }.toSet(),
                 userConverter.createFromT1(source.author),
                 source.noteType.name
             )
@@ -48,7 +48,7 @@ class NoteDomainPersistenceConverter(private val userConverter: IUserDomainPersi
                 ChangedAt.fromString(source.changedAt),
                 Title(source.title),
                 Body(source.body),
-                source.tags.stream().map { t -> Tag(t) }.toList().toSet(),
+                source.tags.map { t -> Tag(t) }.toSet(),
                 userConverter.createFromT2(source.author),
                 NoteType.valueOf(source.noteType)
             )

@@ -40,6 +40,9 @@ abstract class RepositoryBase<TDomainEntity : IDomainEntity, TPersistenceEntity 
     }
 
     override fun getAll(): List<TDomainEntity> {
-        return persistenceRepository.getAll().stream().map { p -> converter.createFromT2(p) }.toList().toList()
+        return persistenceRepository
+            .getAll()
+            .map { p -> converter.createFromT2(p) }
+            .toList()
     }
 }

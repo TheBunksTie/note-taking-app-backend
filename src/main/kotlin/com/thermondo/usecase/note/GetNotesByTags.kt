@@ -33,7 +33,8 @@ class GetNotesByTags(
             val requestedTags = input.tags.map { t -> Tag(t) }.toSet()
             val authoredNotes = noteRepository
                 .getAllByTags(author.id, requestedTags)
-                .stream().map { n -> viewModelConverter.createFromT1(n) }.toList()
+                .map { n -> viewModelConverter.createFromT1(n) }
+                .toList()
 
             return ResultModel.successResult(authoredNotes, author.id.toString())
         } catch (e: Exception) {
@@ -53,9 +54,17 @@ class GetNotesByTags(
             }
 
             fun errorResult(authorId: String?, errorReason: String?): ResultModel {
-                val effectiveAuthorId = if (!authorId.isNullOrEmpty()) authorId else "<null or empty author id>"
-                val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
-                return ResultModel(emptyList(), false, "Unable to retrieves notes for author '$effectiveAuthorId' because of error: $effectiveErrorReason")
+                val effectiveAuthorId =
+                    if (!authorId.isNullOrEmpty()) authorId else "<null or empty author id>"
+                val effectiveErrorReason =
+                    if (!errorReason.isNullOrEmpty()) errorReason
+                    else "<no error reason provided>"
+
+                return ResultModel(
+                    emptyList(),
+                    false,
+                    "Unable to retrieves notes for author '$effectiveAuthorId' because of error: $effectiveErrorReason"
+                )
             }
         }
     }

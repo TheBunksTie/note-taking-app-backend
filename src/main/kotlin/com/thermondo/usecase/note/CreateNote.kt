@@ -26,7 +26,9 @@ class CreateNote(
         try {
             val authorId = Id.fromString(input.authorId)
             val author = userRepository.getBy(authorId)
-                ?: return ResultModel.errorResult(input.title, "User with id '${input.authorId}' could not be found")
+                ?: return ResultModel.errorResult(
+                    input.title, "User with id '${input.authorId}' could not be found"
+                )
 
             val noteType = NoteType.valueOf(input.noteType)
 
@@ -37,7 +39,7 @@ class CreateNote(
             if (input.body != null)
                 newNoteBuilder.withBody(Body(input.body))
             if (input.tags.isNotEmpty())
-                newNoteBuilder.withTags(input.tags.stream().map { t -> Tag(t) }.toList().toSet())
+                newNoteBuilder.withTags(input.tags.map { t -> Tag(t) }.toSet())
 
             val newNote = newNoteBuilder.create()
             val persistedNewNote = noteRepository.persist(newNote)
@@ -66,9 +68,15 @@ class CreateNote(
             }
 
             fun errorResult(noteTitle: String?, errorReason: String?): ResultModel {
-                val effectiveNoteTitleName = if (!noteTitle.isNullOrEmpty()) noteTitle else "<null or empty note title>"
-                val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
-                return ResultModel(null, false, "Unable to create note '$effectiveNoteTitleName' because of error: $effectiveErrorReason")
+                val effectiveNoteTitleName =
+                    if (!noteTitle.isNullOrEmpty()) noteTitle else "<null or empty note title>"
+                val effectiveErrorReason =
+                    if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
+                return ResultModel(
+                    null,
+                    false,
+                    "Unable to create note '$effectiveNoteTitleName' because of error: $effectiveErrorReason"
+                )
             }
         }
     }
