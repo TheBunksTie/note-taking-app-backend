@@ -1,13 +1,21 @@
 package com.thermondo.usecase.note
 
 import com.thermondo.domain.model.Id
-import com.thermondo.domain.note.*
+import com.thermondo.domain.note.Body
+import com.thermondo.domain.note.Note
+import com.thermondo.domain.note.NoteType
+import com.thermondo.domain.note.Tag
+import com.thermondo.domain.note.Title
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
 import com.thermondo.usecase.common.UseCaseTestBase
 import org.junit.Test
-import kotlin.test.*
+import kotlin.test.assertContains
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class DeleteNoteTests : UseCaseTestBase() {
     @Test

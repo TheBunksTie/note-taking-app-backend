@@ -7,7 +7,8 @@ import com.thermondo.persistence.note.notePersistenceModule
 import com.thermondo.persistence.user.userPersistenceModule
 import com.thermondo.usecase.note.noteUseCaseModule
 import com.thermondo.usecase.user.userUseCaseModule
-import io.ktor.server.application.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 

@@ -1,6 +1,10 @@
 package com.thermondo.common
 
-import com.thermondo.domain.note.*
+import com.thermondo.domain.note.Body
+import com.thermondo.domain.note.Note
+import com.thermondo.domain.note.NoteType
+import com.thermondo.domain.note.Tag
+import com.thermondo.domain.note.Title
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName

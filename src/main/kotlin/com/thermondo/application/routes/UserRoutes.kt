@@ -3,11 +3,13 @@ package com.thermondo.application.routes
 import com.thermondo.application.user.UserService
 import com.thermondo.usecase.user.viewmodel.CreateUserViewModel
 import com.thermondo.usecase.user.viewmodel.LoginUserViewModel
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.application.call
+import io.ktor.server.request.receive
+import io.ktor.server.response.respond
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.post
+import io.ktor.server.routing.route
 import org.koin.ktor.ext.inject
 
 fun Route.userRouting() {

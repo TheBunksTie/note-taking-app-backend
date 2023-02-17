@@ -3,7 +3,11 @@ package com.thermondo.persistence.note
 import com.thermondo.domain.model.ChangedAt
 import com.thermondo.domain.model.CreatedAt
 import com.thermondo.domain.model.Id
-import com.thermondo.domain.note.*
+import com.thermondo.domain.note.Body
+import com.thermondo.domain.note.Note
+import com.thermondo.domain.note.NoteType
+import com.thermondo.domain.note.Tag
+import com.thermondo.domain.note.Title
 import com.thermondo.persistence.abstraction.IDomainPersistenceConverter
 import com.thermondo.persistence.common.DomainPersistenceConverterBase
 import com.thermondo.persistence.user.IUserDomainPersistenceConverter

@@ -4,10 +4,10 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.thermondo.domain.model.Id
 import com.thermondo.usecase.abstraction.IAuthenticator
-import io.ktor.http.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
-import io.ktor.server.response.*
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.Principal
+import io.ktor.server.auth.jwt.JWTAuthenticationProvider
+import io.ktor.server.response.respond
 
 /**
  * Json web token authentication strategy

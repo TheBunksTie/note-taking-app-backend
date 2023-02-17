@@ -1,7 +1,13 @@
 package com.thermondo.application.note
 
 import com.thermondo.domain.note.Note
-import com.thermondo.usecase.note.*
+import com.thermondo.usecase.note.CreateNote
+import com.thermondo.usecase.note.DeleteNote
+import com.thermondo.usecase.note.GetNotesByAuthor
+import com.thermondo.usecase.note.GetNotesByKeywords
+import com.thermondo.usecase.note.GetNotesByPublicState
+import com.thermondo.usecase.note.GetNotesByTags
+import com.thermondo.usecase.note.UpdateNote
 
 /**
  * Central point of interaction with all [Note] related use cases for presentation layer

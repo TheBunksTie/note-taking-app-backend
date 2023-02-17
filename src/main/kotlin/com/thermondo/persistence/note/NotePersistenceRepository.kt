@@ -6,7 +6,7 @@ import com.thermondo.persistence.note.abstraction.INotePersistenceRepository
 import com.thermondo.persistence.user.UserPersistenceEntity
 import com.thermondo.persistence.user.UserPersistenceRepository
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 /**
  * In memory repository to store [NotePersistenceEntity]

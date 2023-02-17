@@ -2,7 +2,11 @@ package com.thermondo.usecase.note
 
 import com.thermondo.domain.model.ChangedAt
 import com.thermondo.domain.model.Id
-import com.thermondo.domain.note.*
+import com.thermondo.domain.note.Body
+import com.thermondo.domain.note.Note
+import com.thermondo.domain.note.NoteType
+import com.thermondo.domain.note.Tag
+import com.thermondo.domain.note.Title
 import com.thermondo.domain.user.User
 import com.thermondo.usecase.common.UseCase
 import com.thermondo.usecase.note.abstraction.INoteRepository

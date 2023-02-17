@@ -1,7 +1,7 @@
 package com.thermondo.domain.model
 
 import com.thermondo.domain.common.DomainException
-import java.util.*
+import java.util.UUID
 
 /**
  * Unique identifier for domain entities, based on Java's UUID

@@ -1,9 +1,10 @@
 package com.thermondo.application.plugin
 
 import com.thermondo.infrastructure.authentication.JwtWebTokenAuthenticator
-import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.jwt.jwt
 import org.koin.ktor.ext.inject
 
 fun Application.configureAuthentication() {

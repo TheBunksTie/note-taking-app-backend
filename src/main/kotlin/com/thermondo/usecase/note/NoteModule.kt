@@ -1,8 +1,8 @@
 package com.thermondo.usecase.note
 
-import com.thermondo.usecase.note.viewmodel.NoteViewModelConverter
 import com.thermondo.domain.note.Note
 import com.thermondo.usecase.note.viewmodel.INoteDomainViewModelConverter
+import com.thermondo.usecase.note.viewmodel.NoteViewModelConverter
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module

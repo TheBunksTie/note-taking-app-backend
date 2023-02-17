@@ -1,6 +1,6 @@
 package com.thermondo.usecase.note
 
-import com.thermondo.domain.note.*
+import com.thermondo.domain.note.Note
 import com.thermondo.domain.user.User
 import com.thermondo.usecase.common.UseCase
 import com.thermondo.usecase.note.abstraction.INoteRepository
@@ -34,7 +34,7 @@ class GetNotesByPublicState(
         }
     }
 
-    class RequestModel() : UseCase.RequestModel
+    class RequestModel : UseCase.RequestModel
 
     class ResultModel(val notes: List<NoteViewModel>, override val successful: Boolean, override val message: String) :
         UseCase.ResultModel {

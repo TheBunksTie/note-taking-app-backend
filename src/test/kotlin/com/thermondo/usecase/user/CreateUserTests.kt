@@ -5,7 +5,11 @@ import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
 import com.thermondo.usecase.common.UseCaseTestBase
 import org.junit.Test
-import kotlin.test.*
+import kotlin.test.assertContains
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class CreateUserTests : UseCaseTestBase() {
     @Test

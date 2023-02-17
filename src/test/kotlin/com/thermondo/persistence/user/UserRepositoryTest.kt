@@ -4,7 +4,11 @@ import com.thermondo.common.TestBase
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
-import kotlin.test.*
+import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class UserRepositoryTest : TestBase() {
     // TODO of course the different components of the repository system should be tested by unit tests

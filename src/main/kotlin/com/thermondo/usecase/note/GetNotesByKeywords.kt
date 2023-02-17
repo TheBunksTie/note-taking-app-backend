@@ -1,7 +1,8 @@
 package com.thermondo.usecase.note
 
 import com.thermondo.domain.model.Id
-import com.thermondo.domain.note.*
+import com.thermondo.domain.note.Keyword
+import com.thermondo.domain.note.Note
 import com.thermondo.domain.user.User
 import com.thermondo.usecase.common.UseCase
 import com.thermondo.usecase.note.abstraction.INoteRepository

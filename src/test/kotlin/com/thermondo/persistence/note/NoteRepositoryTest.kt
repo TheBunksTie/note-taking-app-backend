@@ -1,11 +1,20 @@
 package com.thermondo.persistence.note
 
 import com.thermondo.common.TestBase
-import com.thermondo.domain.note.*
+import com.thermondo.domain.note.Body
+import com.thermondo.domain.note.Keyword
+import com.thermondo.domain.note.Note
+import com.thermondo.domain.note.NoteType
+import com.thermondo.domain.note.Tag
+import com.thermondo.domain.note.Title
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
-import kotlin.test.*
+import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class NoteRepositoryTest : TestBase() {
 
