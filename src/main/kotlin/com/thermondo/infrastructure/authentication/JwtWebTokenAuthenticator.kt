@@ -37,11 +37,13 @@ class JwtWebTokenAuthenticator : IAuthenticator {
 
         realm = jwtRealm
 
-        verifier(JWT
-            .require(Algorithm.HMAC256(jwtSecret))
-            .withAudience(jwtAudience)
-            .withIssuer(jwtIssuer)
-            .build())
+        verifier(
+            JWT
+                .require(Algorithm.HMAC256(jwtSecret))
+                .withAudience(jwtAudience)
+                .withIssuer(jwtIssuer)
+                .build()
+        )
 
         validate { credential ->
             val userId = credential.payload.getClaim(CLAIM_USERID).asString()
@@ -57,5 +59,5 @@ class JwtWebTokenAuthenticator : IAuthenticator {
         }
     }
 
-    data class JwtUser(val userId: String): Principal
+    data class JwtUser(val userId: String) : Principal
 }

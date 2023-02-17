@@ -11,4 +11,3 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class LoginUserViewModel(val userName: String, val password: String) : IViewModel
-

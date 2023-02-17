@@ -10,8 +10,8 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
  * Use case class to create new users
  * @param userRepository repository to store and retrieve [User] objects
  */
-class CreateUser(private val userRepository: IUserRepository)
-    : UseCase<CreateUser.RequestModel, CreateUser.ResultModel>() {
+class CreateUser(private val userRepository: IUserRepository) :
+    UseCase<CreateUser.RequestModel, CreateUser.ResultModel>() {
 
     // TODO inject IHashProvider for hashing the pw before storage
 
@@ -40,23 +40,23 @@ class CreateUser(private val userRepository: IUserRepository)
 
             return ResultModel.successResult(persistedNewUser.id.toString(), persistedNewUser.userName.toString())
         } catch (e: Exception) {
-          return ResultModel.errorResult(input.userName, e.message)
+            return ResultModel.errorResult(input.userName, e.message)
         }
     }
 
-    class RequestModel(val userName: String?, val password: String?, val passwordRepetition: String?)
-        : UseCase.RequestModel
+    class RequestModel(val userName: String?, val password: String?, val passwordRepetition: String?) :
+        UseCase.RequestModel
 
-    class ResultModel(val userId: String?, override val successful: Boolean, override val message: String)
-        : UseCase.ResultModel {
+    class ResultModel(val userId: String?, override val successful: Boolean, override val message: String) :
+        UseCase.ResultModel {
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
-            fun successResult(userId: String, userName: String) : ResultModel {
+            fun successResult(userId: String, userName: String): ResultModel {
                 return ResultModel(userId, true, "Successfully created user '$userName'")
             }
 
-            fun errorResult(userName: String?, errorReason: String?) : ResultModel {
+            fun errorResult(userName: String?, errorReason: String?): ResultModel {
                 val effectiveUserName = if (!userName.isNullOrEmpty()) userName else "<null or empty user name>"
                 val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
                 return ResultModel(null, false, "Unable to create user '$effectiveUserName' because of error: $effectiveErrorReason")

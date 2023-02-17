@@ -10,7 +10,7 @@ class Id private constructor(value: UUID) : SimpleValueObject<UUID>(value) {
 
     companion object FactoryMethods {
 
-        fun fromString(stringValue: String) : Id {
+        fun fromString(stringValue: String): Id {
             try {
                 val uuidValue = UUID.fromString(stringValue)
                 return fromUUID(uuidValue)
@@ -19,11 +19,11 @@ class Id private constructor(value: UUID) : SimpleValueObject<UUID>(value) {
             }
         }
 
-        fun fromUUID(uuidValue: UUID) : Id {
+        fun fromUUID(uuidValue: UUID): Id {
             return Id(uuidValue)
         }
 
-        fun generate() : Id {
+        fun generate(): Id {
             return Id(UUID.randomUUID())
         }
     }
@@ -31,7 +31,5 @@ class Id private constructor(value: UUID) : SimpleValueObject<UUID>(value) {
     /**
      * DomainException denoting an invalid argument was passed into the creation of an [Id]
      */
-    class InvalidIdException(invalidIdValue: String) : DomainException("Invalid id value '$invalidIdValue'") {
-
-    }
+    class InvalidIdException(invalidIdValue: String) : DomainException("Invalid id value '$invalidIdValue'")
 }

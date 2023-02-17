@@ -12,4 +12,3 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class CreateUserViewModel(val userName: String, val password: String, val passwordRepetition: String) : IViewModel
-

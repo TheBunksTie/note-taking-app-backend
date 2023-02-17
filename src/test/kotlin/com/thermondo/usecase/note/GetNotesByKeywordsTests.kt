@@ -23,7 +23,7 @@ class GetNotesByKeywordsTests : UseCaseTestBase() {
         val resultModel = getNotesByKeywords.execute(requestModel)
 
         assertFalse(resultModel.successful)
-        assertTrue (resultModel.notes.isEmpty())
+        assertTrue(resultModel.notes.isEmpty())
         assertContains(resultModel.message, nonExistingAuthorId.toString())
         assertContains(resultModel.message, "could not be found")
     }

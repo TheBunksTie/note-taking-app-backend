@@ -278,7 +278,6 @@ class NoteTests {
             setBody(CreateNoteViewModel("my newly created note", "the body of my new note", listOf("tag1", "tag2"), NoteType.PRIVATE.toString()))
         }.bodyAsText()
 
-
         val deletedNoteId = client.delete("/api/v1/notes/$createdNoteId") {
             header(HttpHeaders.Authorization, "Bearer $authenticationToken")
         }.bodyAsText()
@@ -304,7 +303,6 @@ class NoteTests {
             setBody(CreateNoteViewModel("my newly created note", "the body of my new note", listOf("tag1", "tag2"), NoteType.PRIVATE.toString()))
         }.bodyAsText()
 
-
         val response = client.delete("/api/v1/notes/$createdNoteId")
         assertEquals(HttpStatusCode.Unauthorized, response.status)
     }
@@ -316,31 +314,4 @@ class NoteTests {
         }
         return loginResponse.body<AuthenticationTokenViewModel>().authenticationToken
     }
-
-//    @Test
-//    fun publicNotes() = testApplication {
-//
-//        val client = createClient {
-//
-//            install(ContentNegotiation) {
-//                json()
-//            }
-//        }
-//
-//        val loginResponse = client.post("login") {
-//            contentType(ContentType.Application.Json)
-//            //setBody(User("jetbrains", "foobar"))
-//        }
-//
-//        val authToken = loginResponse.body<AuthToken>().token
-//
-//        val helloResponseText = client.get("hello") {
-//            header(HttpHeaders.Authorization, "Bearer $authToken")
-//        }.bodyAsText()
-//
-//        assertTrue {
-//            helloResponseText.contains("Hello, jetbrains!")
-//        }
-//    }
-
 }

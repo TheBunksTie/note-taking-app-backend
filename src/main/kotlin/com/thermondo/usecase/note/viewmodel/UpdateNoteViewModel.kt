@@ -17,4 +17,5 @@ data class UpdateNoteViewModel(
     val title: String?,
     val body: String?,
     val tags: List<String>,
-    val noteType: String) : IViewModel
+    val noteType: String
+) : IViewModel

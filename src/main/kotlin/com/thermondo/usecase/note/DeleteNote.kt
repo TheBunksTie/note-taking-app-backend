@@ -14,8 +14,9 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
  */
 class DeleteNote(
     private val noteRepository: INoteRepository,
-    private val userRepository: IUserRepository)
-    : UseCase<DeleteNote.RequestModel, DeleteNote.ResultModel>() {
+    private val userRepository: IUserRepository
+) :
+    UseCase<DeleteNote.RequestModel, DeleteNote.ResultModel>() {
 
     override fun execute(input: RequestModel): ResultModel {
         try {
@@ -36,7 +37,7 @@ class DeleteNote(
 
             return ResultModel.successResult(existingNote.id.toString(), existingNote.title.toString())
         } catch (e: Exception) {
-          return ResultModel.errorResult(input.id, e.message)
+            return ResultModel.errorResult(input.id, e.message)
         }
     }
 
@@ -46,11 +47,11 @@ class DeleteNote(
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
-            fun successResult(noteId: String, noteTitle: String) : ResultModel {
+            fun successResult(noteId: String, noteTitle: String): ResultModel {
                 return ResultModel(noteId, true, "Successfully deleted note '$noteTitle'")
             }
 
-            fun errorResult(noteId: String?, errorReason: String?) : ResultModel {
+            fun errorResult(noteId: String?, errorReason: String?): ResultModel {
                 val effectiveNoteTitleName = if (!noteId.isNullOrEmpty()) noteId else "<null or empty note id>"
                 val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
                 return ResultModel(null, false, "Unable to delete note '$effectiveNoteTitleName' because of error: $effectiveErrorReason")

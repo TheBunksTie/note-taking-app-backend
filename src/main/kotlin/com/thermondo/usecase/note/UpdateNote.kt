@@ -15,8 +15,9 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
  */
 class UpdateNote(
     private val noteRepository: INoteRepository,
-    private val userRepository: IUserRepository)
-    : UseCase<UpdateNote.RequestModel, UpdateNote.ResultModel>() {
+    private val userRepository: IUserRepository
+) :
+    UseCase<UpdateNote.RequestModel, UpdateNote.ResultModel>() {
 
     override fun execute(input: RequestModel): ResultModel {
         try {
@@ -47,7 +48,7 @@ class UpdateNote(
             val persistedExistingNote = noteRepository.persist(existingNote)
             return ResultModel.successResult(persistedExistingNote.id.toString(), persistedExistingNote.title.toString())
         } catch (e: Exception) {
-          return ResultModel.errorResult(input.title, e.message)
+            return ResultModel.errorResult(input.title, e.message)
         }
     }
 
@@ -60,17 +61,17 @@ class UpdateNote(
         val noteType: String
     ) : UseCase.RequestModel
 
-    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String)
-        : UseCase.ResultModel {
+    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String) :
+        UseCase.ResultModel {
 
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
-            fun successResult(noteId: String, noteTitle: String) : ResultModel {
+            fun successResult(noteId: String, noteTitle: String): ResultModel {
                 return ResultModel(noteId, true, "Successfully updated note '$noteTitle'")
             }
 
-            fun errorResult(noteTitle: String?, errorReason: String?) : ResultModel {
+            fun errorResult(noteTitle: String?, errorReason: String?): ResultModel {
                 val effectiveNoteTitleName = if (!noteTitle.isNullOrEmpty()) noteTitle else "<null or empty note title>"
                 val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
                 return ResultModel(null, false, "Unable to update note '$effectiveNoteTitleName' because of error: $effectiveErrorReason")

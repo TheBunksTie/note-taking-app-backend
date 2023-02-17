@@ -16,8 +16,8 @@ interface INoteDomainPersistenceConverter : IDomainPersistenceConverter<Note, No
 /**
  * Two-way converter between [Note] and its corresponding [NotePersistenceEntity]
  */
-class NoteDomainPersistenceConverter(private val userConverter : IUserDomainPersistenceConverter)
-    : DomainPersistenceConverterBase<Note, NotePersistenceEntity>(), INoteDomainPersistenceConverter {
+class NoteDomainPersistenceConverter(private val userConverter: IUserDomainPersistenceConverter) :
+    DomainPersistenceConverterBase<Note, NotePersistenceEntity>(), INoteDomainPersistenceConverter {
 
     override fun createInstanceOfT2ByT1(source: Note): NotePersistenceEntity {
         try {

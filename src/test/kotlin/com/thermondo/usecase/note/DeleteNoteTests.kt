@@ -79,13 +79,15 @@ class DeleteNoteTests : UseCaseTestBase() {
         val originalAuthor = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
         val newAuthor = userRepository.persist(User.new(UserName("user2"), Password("seCreT123")))
 
-        val existingNote = noteRepository.persist(Note.new()
-            .withTitle(Title("My note title"))
-            .withBody(Body("An interesting body of a note"))
-            .withTags(setOf(Tag("interesting"), Tag("note")))
-            .withAuthor(originalAuthor)
-            .withNoteType(NoteType.PUBLIC)
-            .create())
+        val existingNote = noteRepository.persist(
+            Note.new()
+                .withTitle(Title("My note title"))
+                .withBody(Body("An interesting body of a note"))
+                .withTags(setOf(Tag("interesting"), Tag("note")))
+                .withAuthor(originalAuthor)
+                .withNoteType(NoteType.PUBLIC)
+                .create()
+        )
 
         val requestModel = DeleteNote.RequestModel(existingNote.id.toString(), newAuthor.id.toString())
 
@@ -101,17 +103,20 @@ class DeleteNoteTests : UseCaseTestBase() {
     @Test
     fun execute_validParameters_returnsSuccessResultModel() {
         val existingUser = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
-        val existingNote = noteRepository.persist(Note.new()
-            .withTitle(Title("My note title"))
-            .withBody(Body("An interesting body of a note"))
-            .withTags(setOf(Tag("interesting"), Tag("note")))
-            .withAuthor(existingUser)
-            .withNoteType(NoteType.PUBLIC)
-            .create())
+        val existingNote = noteRepository.persist(
+            Note.new()
+                .withTitle(Title("My note title"))
+                .withBody(Body("An interesting body of a note"))
+                .withTags(setOf(Tag("interesting"), Tag("note")))
+                .withAuthor(existingUser)
+                .withNoteType(NoteType.PUBLIC)
+                .create()
+        )
 
         val requestModel = DeleteNote.RequestModel(
             existingNote.id.toString(),
-            existingUser.id.toString())
+            existingUser.id.toString()
+        )
 
         val deleteNote = DeleteNote(noteRepository, userRepository)
         val resultModel = deleteNote.execute(requestModel)

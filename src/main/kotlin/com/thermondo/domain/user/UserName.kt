@@ -28,4 +28,3 @@ class UserName(userName: String) : SimpleValueObject<String>(userName) {
 
     class NoBlanksInUserNameException : DomainException("User name must not contain any blank characters")
 }
-

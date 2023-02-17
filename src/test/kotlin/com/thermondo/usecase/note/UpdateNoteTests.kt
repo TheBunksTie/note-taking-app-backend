@@ -23,7 +23,8 @@ class UpdateNoteTests : UseCaseTestBase() {
             "An interesting body of a note",
             listOf("interesting", "note"),
             nonExistingAuthorId.toString(),
-            NoteType.PUBLIC.toString())
+            NoteType.PUBLIC.toString()
+        )
 
         val updateNote = UpdateNote(noteRepository, userRepository)
         val resultModel = updateNote.execute(requestModel)
@@ -46,7 +47,8 @@ class UpdateNoteTests : UseCaseTestBase() {
             "An interesting body of a note",
             listOf("interesting", "note"),
             invalidAuthorId,
-            NoteType.PUBLIC.toString())
+            NoteType.PUBLIC.toString()
+        )
 
         val updateNote = UpdateNote(noteRepository, userRepository)
         val resultModel = updateNote.execute(requestModel)
@@ -69,7 +71,8 @@ class UpdateNoteTests : UseCaseTestBase() {
             "An interesting body of a note",
             listOf("interesting", "note"),
             existingUser.id.toString(),
-            NoteType.PUBLIC.toString())
+            NoteType.PUBLIC.toString()
+        )
 
         val updateNote = UpdateNote(noteRepository, userRepository)
         val resultModel = updateNote.execute(requestModel)
@@ -92,7 +95,8 @@ class UpdateNoteTests : UseCaseTestBase() {
             "An interesting body of a note",
             listOf("interesting", "note"),
             existingUser.id.toString(),
-            NoteType.PUBLIC.toString())
+            NoteType.PUBLIC.toString()
+        )
 
         val updateNote = UpdateNote(noteRepository, userRepository)
         val resultModel = updateNote.execute(requestModel)
@@ -109,13 +113,15 @@ class UpdateNoteTests : UseCaseTestBase() {
         val newAuthor = userRepository.persist(User.new(UserName("user2"), Password("seCreT123")))
 
         val title = "My note title"
-        val existingNote = noteRepository.persist(Note.new()
-            .withTitle(Title(title))
-            .withBody(Body("An interesting body of a note"))
-            .withTags(setOf(Tag("interesting"), Tag("note")))
-            .withAuthor(originalAuthor)
-            .withNoteType(NoteType.PUBLIC)
-            .create())
+        val existingNote = noteRepository.persist(
+            Note.new()
+                .withTitle(Title(title))
+                .withBody(Body("An interesting body of a note"))
+                .withTags(setOf(Tag("interesting"), Tag("note")))
+                .withAuthor(originalAuthor)
+                .withNoteType(NoteType.PUBLIC)
+                .create()
+        )
 
         val requestModel = UpdateNote.RequestModel(
             existingNote.id.toString(),
@@ -123,7 +129,8 @@ class UpdateNoteTests : UseCaseTestBase() {
             existingNote.body.toString(),
             existingNote.tags.stream().map { t -> t.toString() }.toList(),
             newAuthor.id.toString(),
-            existingNote.noteType.name)
+            existingNote.noteType.name
+        )
 
         val updateNote = UpdateNote(noteRepository, userRepository)
         val resultModel = updateNote.execute(requestModel)
@@ -148,7 +155,8 @@ class UpdateNoteTests : UseCaseTestBase() {
             "An interesting body of a note",
             listOf("interesting", "note"),
             existingUser.id.toString(),
-            noteType)
+            noteType
+        )
 
         val updateNote = UpdateNote(noteRepository, userRepository)
         val resultModel = updateNote.execute(requestModel)
@@ -162,13 +170,15 @@ class UpdateNoteTests : UseCaseTestBase() {
     @Test
     fun execute_validParameters_returnsSuccessResultModel() {
         val existingUser = userRepository.persist(User.new(UserName("user1"), Password("seCreT123")))
-        val existingNote = noteRepository.persist(Note.new()
-            .withTitle(Title("My note title"))
-            .withBody(Body("An interesting body of a note"))
-            .withTags(setOf(Tag("interesting"), Tag("note")))
-            .withAuthor(existingUser)
-            .withNoteType(NoteType.PUBLIC)
-            .create())
+        val existingNote = noteRepository.persist(
+            Note.new()
+                .withTitle(Title("My note title"))
+                .withBody(Body("An interesting body of a note"))
+                .withTags(setOf(Tag("interesting"), Tag("note")))
+                .withAuthor(existingUser)
+                .withNoteType(NoteType.PUBLIC)
+                .create()
+        )
 
         val requestModel = UpdateNote.RequestModel(
             existingNote.id.toString(),
@@ -176,7 +186,8 @@ class UpdateNoteTests : UseCaseTestBase() {
             existingNote.body.toString(),
             existingNote.tags.stream().map { t -> t.toString() }.toList(),
             existingUser.id.toString(),
-            existingNote.noteType.name)
+            existingNote.noteType.name
+        )
 
         val updateNote = UpdateNote(noteRepository, userRepository)
         val resultModel = updateNote.execute(requestModel)

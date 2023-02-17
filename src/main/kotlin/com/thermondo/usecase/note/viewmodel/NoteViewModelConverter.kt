@@ -37,5 +37,4 @@ class NoteViewModelConverter : DomainViewModelConverterBase<Note, NoteViewModel>
         // user repository would be needed
         throw NotImplementedError("Currently not required")
     }
-
 }

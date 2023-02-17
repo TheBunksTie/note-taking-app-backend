@@ -19,7 +19,7 @@ class UserPersistenceRepository : IUserPersistenceRepository {
         const val testUser2Name = "testUser2"
     }
 
-    private val userMap : MutableMap<String, UserPersistenceEntity> = mutableMapOf(
+    private val userMap: MutableMap<String, UserPersistenceEntity> = mutableMapOf(
         testUser1Id to initTestUser(testUser1Id, testUser1Name),
         testUser2Id to initTestUser(testUser2Id, testUser2Name),
     )

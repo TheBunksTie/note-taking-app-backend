@@ -10,6 +10,5 @@ import com.thermondo.persistence.abstraction.IPersistenceEntity
  * @property createdAt timestamp when mirrored [DomainEntity] entity was originally created
  * @property changedAt timestamp when mirrored [DomainEntity] was modified last
  */
-abstract class PersistenceEntityBase(val id: String, val createdAt: String, val changedAt: String)
-    : IPersistenceEntity {
-}
+abstract class PersistenceEntityBase(val id: String, val createdAt: String, val changedAt: String) :
+    IPersistenceEntity

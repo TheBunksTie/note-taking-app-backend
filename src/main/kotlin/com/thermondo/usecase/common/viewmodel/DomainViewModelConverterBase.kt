@@ -13,8 +13,8 @@ import com.thermondo.usecase.common.UseCase
  * @nested UseCaseConversionException exception indicating an exception while converting
  * between [IDomainEntity] and [IDomainViewModel]
  */
-abstract class DomainViewModelConverterBase<T1 : IDomainEntity, T2 : IDomainViewModel>
-    : ObjectConverterBase<T1, T2>(), IDomainViewModelConverter<T1, T2> {
+abstract class DomainViewModelConverterBase<T1 : IDomainEntity, T2 : IDomainViewModel> :
+    ObjectConverterBase<T1, T2>(), IDomainViewModelConverter<T1, T2> {
 
     /**
      * Specific [UseCase.UseCaseException] indicating an exception while converting

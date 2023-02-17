@@ -2,7 +2,6 @@ package com.thermondo.domain.model
 
 import com.thermondo.domain.common.DomainException
 import org.junit.Test
-
 import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -12,17 +11,17 @@ import kotlin.test.assertNotNull
 class IdTests {
 
     @Test
-    fun fromString_emptyString_throwsException(){
+    fun fromString_emptyString_throwsException() {
         assertFailsWith<DomainException> { Id.fromString("") }
     }
 
     @Test
-    fun fromString_noUUIDString_throwsException(){
+    fun fromString_noUUIDString_throwsException() {
         assertFailsWith<DomainException> { Id.fromString("<no uuid string>") }
     }
 
     @Test
-    fun fromString_validUUIDString_returnsId(){
+    fun fromString_validUUIDString_returnsId() {
         val validUUIDString = UUID.randomUUID().toString()
 
         val id = Id.fromString(validUUIDString)
@@ -30,7 +29,7 @@ class IdTests {
     }
 
     @Test
-    fun fromUUID_validUUID_returnsId(){
+    fun fromUUID_validUUID_returnsId() {
         val validUUID = UUID.randomUUID()
 
         val id = Id.fromUUID(validUUID)
@@ -38,7 +37,7 @@ class IdTests {
     }
 
     @Test
-    fun equals_differentUUIDs_returnsFalse(){
+    fun equals_differentUUIDs_returnsFalse() {
         val id1 = Id.generate()
         val id2 = Id.generate()
 
@@ -46,7 +45,7 @@ class IdTests {
     }
 
     @Test
-    fun equals_sameUUID_returnTrue(){
+    fun equals_sameUUID_returnTrue() {
         val validUUID = UUID.randomUUID()
 
         val id1 = Id.fromUUID(validUUID)

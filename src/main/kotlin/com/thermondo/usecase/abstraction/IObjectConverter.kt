@@ -6,7 +6,6 @@ package com.thermondo.usecase.abstraction
  * @param T2 conversion type operand 2
  */
 interface IObjectConverter<T1, T2> {
-    fun createFromT1(source: T1) : T2
-    fun createFromT2(source: T2) : T1
+    fun createFromT1(source: T1): T2
+    fun createFromT2(source: T2): T1
 }
-

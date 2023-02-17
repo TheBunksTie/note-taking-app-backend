@@ -9,7 +9,7 @@ import com.thermondo.usecase.abstraction.IOperationResultViewModel
  */
 abstract class UseCase<TRequestModel : UseCase.RequestModel, TResultModel : UseCase.ResultModel> {
 
-    abstract fun execute(input: TRequestModel) : TResultModel
+    abstract fun execute(input: TRequestModel): TResultModel
 
     interface RequestModel
 

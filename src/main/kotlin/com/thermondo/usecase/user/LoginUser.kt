@@ -13,8 +13,9 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
  */
 class LoginUser(
     private val userRepository: IUserRepository,
-    private val authenticator: IAuthenticator)
-    : UseCase<LoginUser.RequestModel, LoginUser.ResultModel>() {
+    private val authenticator: IAuthenticator
+) :
+    UseCase<LoginUser.RequestModel, LoginUser.ResultModel>() {
 
     override fun execute(input: RequestModel): ResultModel {
         try {
@@ -34,7 +35,7 @@ class LoginUser(
             val authenticationToken = authenticator.generateToken(existingUser.id)
             return ResultModel.successResult(existingUser.id.toString(), existingUser.userName.toString(), authenticationToken)
         } catch (e: Exception) {
-          return ResultModel.errorResult(input.userName, e.message)
+            return ResultModel.errorResult(input.userName, e.message)
         }
     }
 
@@ -45,20 +46,21 @@ class LoginUser(
         val userName: String?,
         val authenticationToken: AuthenticationTokenViewModel?,
         override val successful: Boolean,
-        override val message: String)
-        : UseCase.ResultModel {
+        override val message: String
+    ) :
+        UseCase.ResultModel {
 
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
-            fun successResult(userId: String, userName: String, authenticationToken: String) : ResultModel {
+            fun successResult(userId: String, userName: String, authenticationToken: String): ResultModel {
                 return ResultModel(userId, userName, AuthenticationTokenViewModel(authenticationToken), true, "Successfully logged in user '$userName'")
             }
 
-            fun errorResult(userName: String?, errorReason: String?) : ResultModel {
+            fun errorResult(userName: String?, errorReason: String?): ResultModel {
                 val effectiveUserName = if (!userName.isNullOrEmpty()) userName else "<null or empty user name>"
                 val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
-                return ResultModel(null, effectiveUserName,null, false, "Unable to login user '$effectiveUserName' because of error: $effectiveErrorReason")
+                return ResultModel(null, effectiveUserName, null, false, "Unable to login user '$effectiveUserName' because of error: $effectiveErrorReason")
             }
         }
     }

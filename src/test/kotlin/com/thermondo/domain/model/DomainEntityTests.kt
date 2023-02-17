@@ -62,8 +62,6 @@ class DomainEntityTests {
         assertEquals(expectedStringRepresentation, testDomainEntity1.toString())
     }
 
-    private class TestDomainEntity1(id: Id, createdAt: CreatedAt, changedAt: ChangedAt) : DomainEntity(id, createdAt, changedAt) {
-    }
-    private class TestDomainEntity2(id: Id, createdAt: CreatedAt, changedAt: ChangedAt) : DomainEntity(id, createdAt, changedAt) {
-    }
+    private class TestDomainEntity1(id: Id, createdAt: CreatedAt, changedAt: ChangedAt) : DomainEntity(id, createdAt, changedAt)
+    private class TestDomainEntity2(id: Id, createdAt: CreatedAt, changedAt: ChangedAt) : DomainEntity(id, createdAt, changedAt)
 }

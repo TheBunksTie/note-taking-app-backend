@@ -1,7 +1,8 @@
 package com.thermondo.usecase.note
 
+import com.thermondo.usecase.note.viewmodel.NoteViewModelConverter
 import com.thermondo.domain.note.Note
-import com.thermondo.usecase.note.viewmodel.*
+import com.thermondo.usecase.note.viewmodel.INoteDomainViewModelConverter
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -18,5 +19,4 @@ val noteUseCaseModule = module {
     singleOf(::GetNotesByTags)
     singleOf(::GetNotesByKeywords)
     singleOf(::GetNotesByPublicState)
-
 }

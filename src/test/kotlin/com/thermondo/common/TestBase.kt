@@ -50,14 +50,16 @@ abstract class TestBase : KoinTest {
         val tags = setOf(Tag("interesting"), Tag("note"))
         val initialNoteType = NoteType.PUBLIC
 
-        return titleNames.map { t -> Thread.sleep(200); noteRepository.persist(
-            Note.new()
-                .withTitle(Title(t))
-                .withBody(body)
-                .withTags(tags)
-                .withAuthor(author)
-                .withNoteType(initialNoteType)
-                .create())
+        return titleNames.map { t ->
+            Thread.sleep(200); noteRepository.persist(
+                Note.new()
+                    .withTitle(Title(t))
+                    .withBody(body)
+                    .withTags(tags)
+                    .withAuthor(author)
+                    .withNoteType(initialNoteType)
+                    .create()
+            )
         }
     }
 }

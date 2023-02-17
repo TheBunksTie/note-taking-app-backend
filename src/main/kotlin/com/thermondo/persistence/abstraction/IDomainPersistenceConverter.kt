@@ -8,5 +8,5 @@ import com.thermondo.usecase.abstraction.IObjectConverter
  * @param TDomainEntity conversion type operand 1 derived from [IDomainEntity]
  * @param TPersistenceEntity conversion type operand 2 derived from [IPersistenceEntity]
  */
-interface IDomainPersistenceConverter<TDomainEntity : IDomainEntity, TPersistenceEntity
-    : IPersistenceEntity> : IObjectConverter<TDomainEntity, TPersistenceEntity>
+interface IDomainPersistenceConverter<TDomainEntity : IDomainEntity, TPersistenceEntity :
+        IPersistenceEntity> : IObjectConverter<TDomainEntity, TPersistenceEntity>

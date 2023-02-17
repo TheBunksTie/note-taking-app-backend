@@ -17,4 +17,5 @@ data class NoteViewModel(
     val body: String?,
     val tags: Set<String>,
     val author: IdViewModel,
-    val noteType: String) : IDomainViewModel
+    val noteType: String
+) : IDomainViewModel

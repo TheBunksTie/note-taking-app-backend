@@ -14,8 +14,9 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
  */
 class CreateNote(
     private val noteRepository: INoteRepository,
-    private val userRepository: IUserRepository)
-    : UseCase<CreateNote.RequestModel, CreateNote.ResultModel>() {
+    private val userRepository: IUserRepository
+) :
+    UseCase<CreateNote.RequestModel, CreateNote.ResultModel>() {
 
     override fun execute(input: RequestModel): ResultModel {
         try {
@@ -39,7 +40,7 @@ class CreateNote(
 
             return ResultModel.successResult(persistedNewNote.id.toString(), persistedNewNote.title.toString())
         } catch (e: Exception) {
-          return ResultModel.errorResult(input.title, e.message)
+            return ResultModel.errorResult(input.title, e.message)
         }
     }
 
@@ -51,16 +52,16 @@ class CreateNote(
         val noteType: String
     ) : UseCase.RequestModel
 
-    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String)
-        : UseCase.ResultModel {
+    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String) :
+        UseCase.ResultModel {
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
-            fun successResult(noteId: String, noteTitle: String) : ResultModel {
+            fun successResult(noteId: String, noteTitle: String): ResultModel {
                 return ResultModel(noteId, true, "Successfully created note '$noteTitle'")
             }
 
-            fun errorResult(noteTitle: String?, errorReason: String?) : ResultModel {
+            fun errorResult(noteTitle: String?, errorReason: String?): ResultModel {
                 val effectiveNoteTitleName = if (!noteTitle.isNullOrEmpty()) noteTitle else "<null or empty note title>"
                 val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
                 return ResultModel(null, false, "Unable to create note '$effectiveNoteTitleName' because of error: $effectiveErrorReason")

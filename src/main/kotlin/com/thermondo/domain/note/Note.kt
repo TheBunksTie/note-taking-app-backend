@@ -15,22 +15,24 @@ import com.thermondo.domain.user.User
  * @param author the authoring and owning [User] of a note
  * @param noteType the type of the note
  */
-class Note(id: Id,
-           createdAt: CreatedAt,
-           changedAt: ChangedAt,
-           var title: Title,
-           var body: Body?,
-           var tags: Set<Tag>,
-           var author: User,
-           var noteType: NoteType) : DomainEntity(id, createdAt, changedAt) {
+class Note(
+    id: Id,
+    createdAt: CreatedAt,
+    changedAt: ChangedAt,
+    var title: Title,
+    var body: Body?,
+    var tags: Set<Tag>,
+    var author: User,
+    var noteType: NoteType
+) : DomainEntity(id, createdAt, changedAt) {
 
     companion object FactoryMethods {
 
-        fun fromAuthor(author: User) : NoteBuilder {
+        fun fromAuthor(author: User): NoteBuilder {
             return NoteBuilder().withAuthor(author)
         }
 
-        fun new() : NoteBuilder {
+        fun new(): NoteBuilder {
             return NoteBuilder()
         }
     }
@@ -47,47 +49,47 @@ class Note(id: Id,
         private var author: User? = null
         private var type: NoteType? = NoteType.PRIVATE
 
-        fun withId(id: Id) : NoteBuilder {
+        fun withId(id: Id): NoteBuilder {
             this.id = id
             return this
         }
 
-        fun withCreatedAt(createdAt: CreatedAt) : NoteBuilder {
+        fun withCreatedAt(createdAt: CreatedAt): NoteBuilder {
             this.createdAt = createdAt
             return this
         }
 
-        fun withChangedAt(changedAt: ChangedAt) : NoteBuilder {
+        fun withChangedAt(changedAt: ChangedAt): NoteBuilder {
             this.changedAt = changedAt
             return this
         }
 
-        fun withTitle(title: Title) : NoteBuilder {
+        fun withTitle(title: Title): NoteBuilder {
             this.title = title
             return this
         }
 
-        fun withBody(body: Body) : NoteBuilder {
+        fun withBody(body: Body): NoteBuilder {
             this.body = body
             return this
         }
 
-        fun withTags(tags: Set<Tag>) : NoteBuilder {
+        fun withTags(tags: Set<Tag>): NoteBuilder {
             this.tags = tags.toSet()
             return this
         }
 
-        fun withAuthor(author: User) : NoteBuilder {
+        fun withAuthor(author: User): NoteBuilder {
             this.author = author
             return this
         }
 
-        fun withNoteType(type: NoteType) : NoteBuilder {
+        fun withNoteType(type: NoteType): NoteBuilder {
             this.type = type
             return this
         }
 
-        fun create() : Note {
+        fun create(): Note {
             if (title == null)
                 throw NoTitleException()
 
@@ -102,4 +104,3 @@ class Note(id: Id,
         class NoAuthorException : DomainException("A note must have an authoring user")
     }
 }
-

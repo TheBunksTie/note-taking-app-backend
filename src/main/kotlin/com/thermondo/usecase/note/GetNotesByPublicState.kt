@@ -17,8 +17,9 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
 class GetNotesByPublicState(
     private val noteRepository: INoteRepository,
     private val userRepository: IUserRepository,
-    private val viewModelConverter: INoteDomainViewModelConverter)
-    : UseCase<GetNotesByPublicState.RequestModel, GetNotesByPublicState.ResultModel>() {
+    private val viewModelConverter: INoteDomainViewModelConverter
+) :
+    UseCase<GetNotesByPublicState.RequestModel, GetNotesByPublicState.ResultModel>() {
 
     @Suppress("LiftReturnOrAssignment")
     override fun execute(input: RequestModel): ResultModel {
@@ -29,22 +30,22 @@ class GetNotesByPublicState(
 
             return ResultModel.successResult(publicNotes)
         } catch (e: Exception) {
-          return ResultModel.errorResult(e.message)
+            return ResultModel.errorResult(e.message)
         }
     }
 
     class RequestModel() : UseCase.RequestModel
 
-    class ResultModel(val notes: List<NoteViewModel>, override val successful: Boolean, override val message: String)
-        : UseCase.ResultModel {
+    class ResultModel(val notes: List<NoteViewModel>, override val successful: Boolean, override val message: String) :
+        UseCase.ResultModel {
 
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
-            fun successResult(notes: List<NoteViewModel>) : ResultModel {
+            fun successResult(notes: List<NoteViewModel>): ResultModel {
                 return ResultModel(notes, true, "Successfully retrieved public notes")
             }
-            fun errorResult(errorReason: String?) : ResultModel {
+            fun errorResult(errorReason: String?): ResultModel {
                 val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
                 return ResultModel(emptyList(), false, "Unable to retrieves public notes because of error: $effectiveErrorReason")
             }

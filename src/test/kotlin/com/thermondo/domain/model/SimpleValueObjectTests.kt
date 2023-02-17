@@ -53,8 +53,6 @@ class SimpleValueObjectTests {
         assertEquals(expectedStringRepresentation, testValueObject1.toString())
     }
 
-    private class TestValueObject1(value: String) : SimpleValueObject<String>(value) {
-    }
-    private class TestValueObject2(value: String) : SimpleValueObject<String>(value) {
-    }
+    private class TestValueObject1(value: String) : SimpleValueObject<String>(value)
+    private class TestValueObject2(value: String) : SimpleValueObject<String>(value)
 }

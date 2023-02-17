@@ -16,8 +16,9 @@ import com.thermondo.usecase.abstraction.IRepository
  */
 abstract class RepositoryBase<TDomainEntity : IDomainEntity, TPersistenceEntity : IPersistenceEntity>(
     protected val converter: IDomainPersistenceConverter<TDomainEntity, TPersistenceEntity>,
-    protected val persistenceRepository: IPersistenceRepository<TPersistenceEntity>)
-    : IRepository<TDomainEntity> {
+    protected val persistenceRepository: IPersistenceRepository<TPersistenceEntity>
+) :
+    IRepository<TDomainEntity> {
 
     override fun persist(persistableObject: TDomainEntity): TDomainEntity {
         val persistenceObject = converter.createFromT1(persistableObject)
@@ -25,7 +26,7 @@ abstract class RepositoryBase<TDomainEntity : IDomainEntity, TPersistenceEntity 
         return converter.createFromT2(persistedObject)
     }
 
-    override fun delete(id: Id) : Boolean {
+    override fun delete(id: Id): Boolean {
         return persistenceRepository.delete(id)
     }
 
@@ -39,6 +40,6 @@ abstract class RepositoryBase<TDomainEntity : IDomainEntity, TPersistenceEntity 
     }
 
     override fun getAll(): List<TDomainEntity> {
-        return persistenceRepository.getAll().stream().map { p -> converter.createFromT2(p) }.toList()
+        return persistenceRepository.getAll().stream().map { p -> converter.createFromT2(p) }.toList().toList()
     }
 }

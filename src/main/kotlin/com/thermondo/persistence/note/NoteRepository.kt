@@ -16,15 +16,17 @@ import com.thermondo.usecase.note.abstraction.INoteRepository
  */
 class NoteRepository(
     converter: IDomainPersistenceConverter<Note, NotePersistenceEntity>,
-    persistenceRepository: INotePersistenceRepository)
-    : RepositoryBase<Note, NotePersistenceEntity>(converter, persistenceRepository), INoteRepository {
+    persistenceRepository: INotePersistenceRepository
+) :
+    RepositoryBase<Note, NotePersistenceEntity>(converter, persistenceRepository), INoteRepository {
+
     override fun getAllByAuthor(authorId: Id): List<Note> {
         val authorIdString = authorId.toString()
 
         return (persistenceRepository as INotePersistenceRepository)
             .getAllByAuthor(authorIdString)
             .stream().map { n -> converter.createFromT2(n) }
-            .toList()
+            .toList().toList()
     }
 
     override fun getAllByTags(authorId: Id, tags: Set<Tag>): List<Note> {
@@ -34,7 +36,7 @@ class NoteRepository(
         return (persistenceRepository as INotePersistenceRepository)
             .getAllByTags(authorIdString, tagStringSet)
             .stream().map { n -> converter.createFromT2(n) }
-            .toList()
+            .toList().toList()
     }
 
     override fun getAllByKeywords(authorId: Id, keywords: Set<Keyword>): List<Note> {
@@ -44,13 +46,13 @@ class NoteRepository(
         return (persistenceRepository as INotePersistenceRepository)
             .getAllByKeywords(authorIdString, keywordsStringSet)
             .stream().map { n -> converter.createFromT2(n) }
-            .toList()
+            .toList().toList()
     }
 
     override fun getAllPublic(): List<Note> {
         return (persistenceRepository as INotePersistenceRepository)
             .getAllPublic()
             .stream().map { n -> converter.createFromT2(n) }
-            .toList()
+            .toList().toList()
     }
 }

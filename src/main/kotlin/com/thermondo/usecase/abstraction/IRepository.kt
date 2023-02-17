@@ -13,4 +13,3 @@ interface IRepository<T> {
     fun getBy(id: Id): T?
     fun getAll(): List<T>
 }
-

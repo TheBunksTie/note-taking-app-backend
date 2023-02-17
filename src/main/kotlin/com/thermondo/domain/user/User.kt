@@ -10,17 +10,17 @@ import com.thermondo.domain.model.Id
  * @param userName the username of the user
  * @param password the password of the user
  */
-class User(id: Id,
-           createdAt: CreatedAt,
-           changedAt: ChangedAt,
-           var userName: UserName,
-           var password: Password) : DomainEntity(id, createdAt, changedAt) {
+class User(
+    id: Id,
+    createdAt: CreatedAt,
+    changedAt: ChangedAt,
+    var userName: UserName,
+    var password: Password
+) : DomainEntity(id, createdAt, changedAt) {
 
     companion object FactoryMethods {
-        fun new(userName: UserName, password: Password) : User {
+        fun new(userName: UserName, password: Password): User {
             return User(Id.generate(), CreatedAt.now(), ChangedAt.now(), userName, password)
         }
     }
 }
-
-

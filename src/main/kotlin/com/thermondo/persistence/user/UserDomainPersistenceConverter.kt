@@ -17,8 +17,8 @@ interface IUserDomainPersistenceConverter : IDomainPersistenceConverter<User, Us
 /**
  * Two-way converter between [User] and its corresponding [UserPersistenceEntity]
  */
-class UserDomainPersistenceConverter
-    : DomainPersistenceConverterBase<User, UserPersistenceEntity>(), IUserDomainPersistenceConverter {
+class UserDomainPersistenceConverter :
+    DomainPersistenceConverterBase<User, UserPersistenceEntity>(), IUserDomainPersistenceConverter {
 
     override fun createInstanceOfT2ByT1(source: User): UserPersistenceEntity {
         // TODO in real world application, password must be encrypted when persisted

@@ -9,5 +9,5 @@ interface IDomainEntity : IDomainObject {
     /**
      * returns the id of a domain entity
      */
-    fun id() : Id
+    fun id(): Id
 }

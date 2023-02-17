@@ -4,13 +4,13 @@ import com.thermondo.domain.abstraction.IDomainEntity
 
 /**
  * Abstract base class for domain entity with main properties [id], [createdAt], [changedAt]
-     * @property id unique id of the domain entity
-     * @property createdAt timestamp when domain entity was originally created
-     * @property changedAt timestamp when domain entity was modified last
+ * @property id unique id of the domain entity
+ * @property createdAt timestamp when domain entity was originally created
+ * @property changedAt timestamp when domain entity was modified last
  */
 abstract class DomainEntity(var id: Id, var createdAt: CreatedAt, var changedAt: ChangedAt) : IDomainEntity {
 
-    override fun id() : Id {
+    override fun id(): Id {
         return id
     }
 

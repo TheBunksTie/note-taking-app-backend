@@ -13,43 +13,42 @@ class NoteService(
     private val getNotesByAuthor: GetNotesByAuthor,
     private val getNotesByTags: GetNotesByTags,
     private val getNotesByKeywords: GetNotesByKeywords,
-    private val getNotesByPublicState: GetNotesByPublicState) {
+    private val getNotesByPublicState: GetNotesByPublicState
+) {
 
-    fun createNote(title: String?, body: String?, tags: List<String>, authorId: String, noteType: String)
-        : CreateNote.ResultModel  {
+    fun createNote(title: String?, body: String?, tags: List<String>, authorId: String, noteType: String): CreateNote.ResultModel {
 
         val request = CreateNote.RequestModel(title, body, tags, authorId, noteType)
         return createNote.execute(request)
     }
 
-    fun updateNote(id: String, title: String?, body: String?, tags: List<String>, authorId: String, noteType: String)
-        : UpdateNote.ResultModel  {
+    fun updateNote(id: String, title: String?, body: String?, tags: List<String>, authorId: String, noteType: String): UpdateNote.ResultModel {
 
         val request = UpdateNote.RequestModel(id, title, body, tags, authorId, noteType)
         return updateNote.execute(request)
     }
 
-    fun deleteNote(id: String, authorId: String): DeleteNote.ResultModel  {
+    fun deleteNote(id: String, authorId: String): DeleteNote.ResultModel {
         val request = DeleteNote.RequestModel(id, authorId)
         return deleteNote.execute(request)
     }
 
-    fun getNotesByAuthor(authorId: String): GetNotesByAuthor.ResultModel  {
+    fun getNotesByAuthor(authorId: String): GetNotesByAuthor.ResultModel {
         val request = GetNotesByAuthor.RequestModel(authorId)
         return getNotesByAuthor.execute(request)
     }
 
-    fun getNotesByTags(authorId: String, tags: List<String>): GetNotesByTags.ResultModel  {
+    fun getNotesByTags(authorId: String, tags: List<String>): GetNotesByTags.ResultModel {
         val request = GetNotesByTags.RequestModel(authorId, tags)
         return getNotesByTags.execute(request)
     }
 
-    fun getNotesByKeywords(authorId: String, keywords: List<String>): GetNotesByKeywords.ResultModel  {
+    fun getNotesByKeywords(authorId: String, keywords: List<String>): GetNotesByKeywords.ResultModel {
         val request = GetNotesByKeywords.RequestModel(authorId, keywords)
         return getNotesByKeywords.execute(request)
     }
 
-    fun getNotesByPublicState(): GetNotesByPublicState.ResultModel  {
+    fun getNotesByPublicState(): GetNotesByPublicState.ResultModel {
         val request = GetNotesByPublicState.RequestModel()
         return getNotesByPublicState.execute(request)
     }

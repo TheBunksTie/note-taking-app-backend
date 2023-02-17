@@ -19,8 +19,9 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
 class GetNotesByKeywords(
     private val noteRepository: INoteRepository,
     private val userRepository: IUserRepository,
-    private val viewModelConverter: INoteDomainViewModelConverter)
-    : UseCase<GetNotesByKeywords.RequestModel, GetNotesByKeywords.ResultModel>() {
+    private val viewModelConverter: INoteDomainViewModelConverter
+) :
+    UseCase<GetNotesByKeywords.RequestModel, GetNotesByKeywords.ResultModel>() {
 
     override fun execute(input: RequestModel): ResultModel {
         try {
@@ -35,23 +36,23 @@ class GetNotesByKeywords(
 
             return ResultModel.successResult(authoredNotes, author.id.toString())
         } catch (e: Exception) {
-          return ResultModel.errorResult(input.authorId, e.message)
+            return ResultModel.errorResult(input.authorId, e.message)
         }
     }
 
     class RequestModel(val authorId: String, val keywords: List<String>) : UseCase.RequestModel
 
-    class ResultModel(val notes: List<NoteViewModel>, override val successful: Boolean, override val message: String)
-        : UseCase.ResultModel {
+    class ResultModel(val notes: List<NoteViewModel>, override val successful: Boolean, override val message: String) :
+        UseCase.ResultModel {
 
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
-            fun successResult(notes: List<NoteViewModel>, authorId: String) : ResultModel {
+            fun successResult(notes: List<NoteViewModel>, authorId: String): ResultModel {
                 return ResultModel(notes, true, "Successfully retrieved notes for author'$authorId'")
             }
 
-            fun errorResult(authorId: String?, errorReason: String?) : ResultModel {
+            fun errorResult(authorId: String?, errorReason: String?): ResultModel {
                 val effectiveAuthorId = if (!authorId.isNullOrEmpty()) authorId else "<null or empty author id>"
                 val effectiveErrorReason = if (!errorReason.isNullOrEmpty()) errorReason else "<no error reason provided>"
                 return ResultModel(emptyList(), false, "Unable to retrieves notes for author '$effectiveAuthorId' because of error: $effectiveErrorReason")

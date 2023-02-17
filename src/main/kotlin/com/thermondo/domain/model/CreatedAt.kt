@@ -9,18 +9,16 @@ class CreatedAt private constructor(createdAt: LocalDateTime) : SimpleValueObjec
 
     companion object FactoryMethods {
 
-        fun now() : CreatedAt {
+        fun now(): CreatedAt {
             return CreatedAt(LocalDateTime.now())
         }
 
-        fun fromDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int) : CreatedAt {
+        fun fromDate(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int): CreatedAt {
             return CreatedAt(LocalDateTime.of(year, month, day, hour, minute, second))
         }
 
-        fun fromString(createdAtString: String) : CreatedAt {
+        fun fromString(createdAtString: String): CreatedAt {
             return CreatedAt(LocalDateTime.parse(createdAtString))
         }
     }
 }
-
-

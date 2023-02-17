@@ -20,14 +20,22 @@ class NotePersistenceRepository : INotePersistenceRepository {
 
     private fun initTestNoteRepository(): MutableMap<String, NotePersistenceEntity> {
         val noteList = listOf(
-            initTestNote(UserPersistenceRepository.testUser1Name, "body11", setOf("tag111", "tag112"),
-                UserPersistenceRepository.testUser1Id, NoteType.PUBLIC.toString()),
-            initTestNote(UserPersistenceRepository.testUser1Name, "body12", setOf("tag121"),
-                UserPersistenceRepository.testUser1Id, NoteType.PRIVATE.toString()),
-            initTestNote(UserPersistenceRepository.testUser2Name, "body21", emptySet(),
-                UserPersistenceRepository.testUser2Id, NoteType.PUBLIC.toString()),
-            initTestNote(UserPersistenceRepository.testUser2Name, "body22", setOf("tag221", "tag222", "tag223"),
-                UserPersistenceRepository.testUser2Id, NoteType.PRIVATE.toString()),
+            initTestNote(
+                UserPersistenceRepository.testUser1Name, "body11", setOf("tag111", "tag112"),
+                UserPersistenceRepository.testUser1Id, NoteType.PUBLIC.toString()
+            ),
+            initTestNote(
+                UserPersistenceRepository.testUser1Name, "body12", setOf("tag121"),
+                UserPersistenceRepository.testUser1Id, NoteType.PRIVATE.toString()
+            ),
+            initTestNote(
+                UserPersistenceRepository.testUser2Name, "body21", emptySet(),
+                UserPersistenceRepository.testUser2Id, NoteType.PUBLIC.toString()
+            ),
+            initTestNote(
+                UserPersistenceRepository.testUser2Name, "body22", setOf("tag221", "tag222", "tag223"),
+                UserPersistenceRepository.testUser2Id, NoteType.PRIVATE.toString()
+            ),
         )
 
         return noteList.associateBy(keySelector = { n -> n.id }, valueTransform = { n -> n }).toMutableMap()
@@ -48,13 +56,13 @@ class NotePersistenceRepository : INotePersistenceRepository {
             body,
             tags,
             initTestUser(authorId, authorName),
-            noteType)
+            noteType
+        )
     }
 
     private fun initTestUser(id: String, userName: String): UserPersistenceEntity {
         return UserPersistenceEntity(id, LocalDateTime.now().toString(), LocalDateTime.now().toString(), userName, "Test1")
     }
-
 
     override fun persist(persistableObject: NotePersistenceEntity): NotePersistenceEntity {
         noteMap[persistableObject.id] = persistableObject
@@ -103,6 +111,6 @@ class NotePersistenceRepository : INotePersistenceRepository {
     }
 
     private fun containsKeyword(searchBody: String, keywords: Set<String>): Boolean {
-        return keywords.any{ k -> searchBody.contains(k)}
+        return keywords.any { k -> searchBody.contains(k) }
     }
 }

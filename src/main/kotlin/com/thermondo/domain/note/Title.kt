@@ -7,7 +7,7 @@ import com.thermondo.domain.model.SimpleValueObject
  * Value object representing the title of a [Note]
  * @param title the actual string title, may not be empty or blank and not longer than [maxTitleLength]
  */
-class Title constructor(title: String): SimpleValueObject<String>(title) {
+class Title constructor(title: String) : SimpleValueObject<String>(title) {
 
     private val maxTitleLength = 50
 
