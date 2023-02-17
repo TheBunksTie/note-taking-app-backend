@@ -20,7 +20,6 @@ class Tag(tag: String) : SimpleValueObject<String>(tag) {
 
         if (tag.contains(" "))
             throw NoBlanksInTagException()
-
     }
 
     class NoEmptyTagException : DomainException("Tag must not be empty")

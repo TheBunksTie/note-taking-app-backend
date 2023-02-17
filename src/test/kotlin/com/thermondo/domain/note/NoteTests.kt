@@ -37,7 +37,7 @@ class NoteTests {
         val expectedChangedAt = ChangedAt.now()
         val expectedTitle = Title("My note title")
         val expectedBody = Body("An interesting body of a note")
-        val expectedTags = listOf(Tag("interesting"), Tag("note"))
+        val expectedTags = setOf(Tag("interesting"), Tag("note"))
         val expectedNoteType = NoteType.PUBLIC
 
         val expectedAuthor = User.new(UserName("user1"), Password("seCreT123"))

@@ -20,7 +20,7 @@ class Note(id: Id,
            changedAt: ChangedAt,
            var title: Title,
            var body: Body?,
-           var tags: List<Tag>,
+           var tags: Set<Tag>,
            var author: User,
            var noteType: NoteType) : DomainEntity(id, createdAt, changedAt) {
 
@@ -43,7 +43,7 @@ class Note(id: Id,
 
         private var title: Title? = null
         private var body: Body? = null
-        private var tags: List<Tag>? = ArrayList()
+        private var tags: Set<Tag>? = HashSet()
         private var author: User? = null
         private var type: NoteType? = NoteType.PRIVATE
 
@@ -72,8 +72,8 @@ class Note(id: Id,
             return this
         }
 
-        fun withTags(tags: List<Tag>) : NoteBuilder {
-            this.tags = tags
+        fun withTags(tags: Set<Tag>) : NoteBuilder {
+            this.tags = tags.toSet()
             return this
         }
 
