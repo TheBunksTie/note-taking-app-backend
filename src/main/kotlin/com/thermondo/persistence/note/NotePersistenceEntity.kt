@@ -18,7 +18,7 @@ class NotePersistenceEntity(
         changedAt: String,
         val title: String,
         val body: String,
-        val tags: List<String>,
+        val tags: Set<String>,
         val author: UserPersistenceEntity,
         val noteType: String)
         : PersistenceEntityBase(id, createdAt, changedAt)

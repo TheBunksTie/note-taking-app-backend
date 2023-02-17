@@ -1,27 +1,16 @@
 package com.thermondo.persistence.user
 
+import com.thermondo.common.TestBase
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
-import com.thermondo.usecase.user.abstraction.IUserRepository
-import org.junit.Rule
-import org.koin.test.KoinTest
-import org.koin.test.KoinTestRule
-import org.koin.test.inject
 import kotlin.test.*
 
-class UserRepositoryTest : KoinTest {
-    private val userRepository: IUserRepository by inject()
-
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(userPersistenceModule)
-    }
-
+class UserRepositoryTest : TestBase() {
     // TODO of course the different components of the repository system should be tested by unit tests
-
     @Test
     fun crudUserIntegrationTest() {
+        val exitingInitialDataUsersCount = userRepository.getAll().size
 
         val initialUserName = UserName("user1")
         val initialPassword = Password("seCreT123")
@@ -54,7 +43,7 @@ class UserRepositoryTest : KoinTest {
 
         // get all
         val persistedUsersList = userRepository.getAll()
-        assertEquals(1, persistedUsersList.size)
+        assertEquals(exitingInitialDataUsersCount + 1, persistedUsersList.size)
 
         // successful exists by id
         val existsById1 = userRepository.exists(updatedPersistedUser2.id)
@@ -80,9 +69,8 @@ class UserRepositoryTest : KoinTest {
         val existsByName2 = userRepository.exists(updatedPersistedUser2.userName)
         assertFalse(existsByName2)
 
-        // empty get all
+        // "empty" get all (only previous initial test data)
         val persistedUsersList2 = userRepository.getAll()
-        assertTrue(persistedUsersList2.isEmpty())
-
+        assertEquals(exitingInitialDataUsersCount, persistedUsersList2.size)
     }
 }

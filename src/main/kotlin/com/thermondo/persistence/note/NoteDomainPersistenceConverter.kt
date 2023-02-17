@@ -16,8 +16,25 @@ interface INoteDomainPersistenceConverter : IDomainPersistenceConverter<Note, No
 /**
  * Two-way converter between [Note] and its corresponding [NotePersistenceEntity]
  */
-class NoteDomainPersistenceConverter(private val userConverter : IUserDomainPersistenceConverter) :
-    DomainPersistenceConverterBase<Note, NotePersistenceEntity>(), INoteDomainPersistenceConverter {
+class NoteDomainPersistenceConverter(private val userConverter : IUserDomainPersistenceConverter)
+    : DomainPersistenceConverterBase<Note, NotePersistenceEntity>(), INoteDomainPersistenceConverter {
+
+    override fun createInstanceOfT2ByT1(source: Note): NotePersistenceEntity {
+        try {
+            return NotePersistenceEntity(
+                source.id.toString(),
+                source.createdAt.toString(),
+                source.changedAt.toString(),
+                source.title.toString(),
+                source.body.toString(),
+                source.tags.stream().map { t -> t.value }.toList().toSet(),
+                userConverter.createFromT1(source.author),
+                source.noteType.name
+            )
+        } catch (e: Exception) {
+            throw PersistenceConversionException(e)
+        }
+    }
 
     override fun createInstanceOfT1ByT2(source: NotePersistenceEntity): Note {
         try {
@@ -27,27 +44,9 @@ class NoteDomainPersistenceConverter(private val userConverter : IUserDomainPers
                 ChangedAt.fromString(source.changedAt),
                 Title(source.title),
                 Body(source.body),
-                source.tags.stream().map { t -> Tag(t) }.toList(),
+                source.tags.stream().map { t -> Tag(t) }.toList().toSet(),
                 userConverter.createFromT2(source.author),
                 NoteType.valueOf(source.noteType)
-            )
-        } catch (e: Exception) {
-            throw PersistenceConversionException(e)
-        }
-    }
-
-    override fun createInstanceOfT2ByT1(source: Note): NotePersistenceEntity {
-
-        try {
-            return NotePersistenceEntity(
-                source.id.toString(),
-                source.createdAt.toString(),
-                source.changedAt.toString(),
-                source.title.toString(),
-                source.body.toString(),
-                source.tags.stream().map { t -> t.value }.toList(),
-                userConverter.createFromT1(source.author),
-                source.noteType.name
             )
         } catch (e: Exception) {
             throw PersistenceConversionException(e)

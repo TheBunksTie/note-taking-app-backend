@@ -17,25 +17,8 @@ interface IUserDomainPersistenceConverter : IDomainPersistenceConverter<User, Us
 /**
  * Two-way converter between [User] and its corresponding [UserPersistenceEntity]
  */
-class UserDomainPersistenceConverter :
-    DomainPersistenceConverterBase<User, UserPersistenceEntity>(), IUserDomainPersistenceConverter {
-
-    override fun createInstanceOfT1ByT2(source: UserPersistenceEntity): User {
-        // TODO in real world application, password must be decrypted when retrieved from persistence source
-        // via injected IEncryptionManager.decrypt
-
-        try {
-            return User(
-                Id.fromString(source.id),
-                CreatedAt.fromString(source.createdAt),
-                ChangedAt.fromString(source.changedAt),
-                UserName(source.userName),
-                Password(source.password)
-            )
-        } catch (e: Exception) {
-            throw PersistenceConversionException(e)
-        }
-    }
+class UserDomainPersistenceConverter
+    : DomainPersistenceConverterBase<User, UserPersistenceEntity>(), IUserDomainPersistenceConverter {
 
     override fun createInstanceOfT2ByT1(source: User): UserPersistenceEntity {
         // TODO in real world application, password must be encrypted when persisted
@@ -48,6 +31,23 @@ class UserDomainPersistenceConverter :
                 source.changedAt.toString(),
                 source.userName.toString(),
                 source.password.toString()
+            )
+        } catch (e: Exception) {
+            throw PersistenceConversionException(e)
+        }
+    }
+
+    override fun createInstanceOfT1ByT2(source: UserPersistenceEntity): User {
+        // TODO in real world application, password must be decrypted when retrieved from persistence source
+        // via injected IEncryptionManager.decrypt
+
+        try {
+            return User(
+                Id.fromString(source.id),
+                CreatedAt.fromString(source.createdAt),
+                ChangedAt.fromString(source.changedAt),
+                UserName(source.userName),
+                Password(source.password)
             )
         } catch (e: Exception) {
             throw PersistenceConversionException(e)
