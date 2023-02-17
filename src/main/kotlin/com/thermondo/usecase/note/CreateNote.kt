@@ -32,7 +32,7 @@ class CreateNote(
             if (input.body != null)
                 newNoteBuilder.withBody(Body(input.body))
             if (input.tags.isNotEmpty())
-                newNoteBuilder.withTags(input.tags.stream().map { t -> Tag(t) }.toList())
+                newNoteBuilder.withTags(input.tags.stream().map { t -> Tag(t) }.toList().toSet())
 
             val newNote = newNoteBuilder.create()
             val persistedNewNote = noteRepository.persist(newNote)
@@ -51,7 +51,8 @@ class CreateNote(
         val noteType: String
     ) : UseCase.RequestModel
 
-    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String) : UseCase.ResultModel {
+    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String)
+        : UseCase.ResultModel {
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {

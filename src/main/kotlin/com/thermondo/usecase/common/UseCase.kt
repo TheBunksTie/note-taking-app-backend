@@ -14,4 +14,9 @@ abstract class UseCase<TRequestModel : UseCase.RequestModel, TResultModel : UseC
     interface RequestModel
 
     interface ResultModel : IOperationResultViewModel
+
+    /**
+     * Abstract base class for any use case related exception
+     */
+    abstract class UseCaseException(message: String, innerException: Exception?) : RuntimeException(message, innerException)
 }

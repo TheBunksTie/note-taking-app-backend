@@ -5,26 +5,11 @@ import com.thermondo.domain.note.*
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
-import com.thermondo.persistence.note.notePersistenceModule
-import com.thermondo.persistence.user.userPersistenceModule
-import com.thermondo.usecase.note.abstraction.INoteRepository
-import com.thermondo.usecase.user.abstraction.IUserRepository
-import org.junit.Rule
+import com.thermondo.usecase.common.UseCaseTestBase
 import org.junit.Test
-import org.koin.test.KoinTest
-import org.koin.test.KoinTestRule
-import org.koin.test.inject
 import kotlin.test.*
-import kotlin.test.assertNotNull
 
-class UpdateNoteTests : KoinTest {
-    private val noteRepository: INoteRepository by inject()
-    private val userRepository: IUserRepository by inject()
-
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(userPersistenceModule, notePersistenceModule)
-    }
+class UpdateNoteTests : UseCaseTestBase() {
 
     @Test
     fun execute_nonExistingAuthor_returnsErrorResultModel() {
@@ -127,7 +112,7 @@ class UpdateNoteTests : KoinTest {
         val existingNote = noteRepository.persist(Note.new()
             .withTitle(Title(title))
             .withBody(Body("An interesting body of a note"))
-            .withTags(listOf(Tag("interesting"), Tag("note")))
+            .withTags(setOf(Tag("interesting"), Tag("note")))
             .withAuthor(originalAuthor)
             .withNoteType(NoteType.PUBLIC)
             .create())
@@ -180,7 +165,7 @@ class UpdateNoteTests : KoinTest {
         val existingNote = noteRepository.persist(Note.new()
             .withTitle(Title("My note title"))
             .withBody(Body("An interesting body of a note"))
-            .withTags(listOf(Tag("interesting"), Tag("note")))
+            .withTags(setOf(Tag("interesting"), Tag("note")))
             .withAuthor(existingUser)
             .withNoteType(NoteType.PUBLIC)
             .create())

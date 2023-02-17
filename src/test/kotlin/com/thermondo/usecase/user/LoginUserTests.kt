@@ -1,32 +1,27 @@
 package com.thermondo.usecase.user
 
+import com.thermondo.domain.model.Id
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
-import com.thermondo.persistence.user.userPersistenceModule
-import com.thermondo.usecase.user.abstraction.IUserRepository
-import org.junit.Rule
+import com.thermondo.usecase.abstraction.IAuthenticator
+import com.thermondo.usecase.common.UseCaseTestBase
 import org.junit.Test
-import org.koin.test.KoinTest
-import org.koin.test.KoinTestRule
-import org.koin.test.inject
 import kotlin.test.*
-import kotlin.test.assertNotNull
 
-class LoginUserTests : KoinTest {
-    private val userRepository: IUserRepository by inject()
+class LoginUserTests : UseCaseTestBase() {
 
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(userPersistenceModule)
+    private val authenticatorMock = object : IAuthenticator {
+        override fun generateToken(userId: Id): String {
+            return "<generated token>"
+        }
     }
-
     @Test
     fun execute_userNameNull_returnsErrorResultModel() {
         val password = "seCreT123"
         val requestModel = LoginUser.RequestModel(null, password)
 
-        val loginUser = LoginUser(userRepository)
+        val loginUser = LoginUser(userRepository, authenticatorMock)
         val resultModel = loginUser.execute(requestModel)
 
         assertFalse(resultModel.successful)
@@ -39,7 +34,7 @@ class LoginUserTests : KoinTest {
         val userName = "user1"
         val requestModel = LoginUser.RequestModel(userName, null)
 
-        val loginUser = LoginUser(userRepository)
+        val loginUser = LoginUser(userRepository, authenticatorMock)
         val resultModel = loginUser.execute(requestModel)
 
         assertFalse(resultModel.successful)
@@ -54,7 +49,7 @@ class LoginUserTests : KoinTest {
         val password = "seCreT123"
         val requestModel = LoginUser.RequestModel(userName, password)
 
-        val loginUser = LoginUser(userRepository)
+        val loginUser = LoginUser(userRepository, authenticatorMock)
         val resultModel = loginUser.execute(requestModel)
 
         assertFalse(resultModel.successful)
@@ -71,7 +66,7 @@ class LoginUserTests : KoinTest {
 
         val requestModel = LoginUser.RequestModel(existingUser.userName.value, "incorrectPassword")
 
-        val loginUser = LoginUser(userRepository)
+        val loginUser = LoginUser(userRepository, authenticatorMock)
         val resultModel = loginUser.execute(requestModel)
 
         assertFalse(resultModel.successful)
@@ -88,7 +83,7 @@ class LoginUserTests : KoinTest {
 
         val requestModel = LoginUser.RequestModel(existingUser.userName.value, existingUser.password.value)
 
-        val loginUser = LoginUser(userRepository)
+        val loginUser = LoginUser(userRepository, authenticatorMock)
         val resultModel = loginUser.execute(requestModel)
 
         assertTrue(resultModel.successful)

@@ -38,7 +38,7 @@ class UpdateNote(
             if (input.body != null)
                 existingNote.body = Body(input.body)
 
-            existingNote.tags = input.tags.stream().map { t -> Tag(t) }.toList()
+            existingNote.tags = input.tags.stream().map { t -> Tag(t) }.toList().toSet()
 
             existingNote.noteType = noteType
             existingNote.changedAt = ChangedAt.now()
@@ -60,7 +60,9 @@ class UpdateNote(
         val noteType: String
     ) : UseCase.RequestModel
 
-    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String) : UseCase.ResultModel {
+    class ResultModel(val noteId: String?, override val successful: Boolean, override val message: String)
+        : UseCase.ResultModel {
+
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {

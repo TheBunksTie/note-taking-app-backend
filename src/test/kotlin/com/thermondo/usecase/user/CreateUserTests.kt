@@ -3,24 +3,11 @@ package com.thermondo.usecase.user
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
-import com.thermondo.persistence.user.userPersistenceModule
-import com.thermondo.usecase.user.abstraction.IUserRepository
-import org.junit.Rule
+import com.thermondo.usecase.common.UseCaseTestBase
 import org.junit.Test
-import org.koin.test.KoinTest
-import org.koin.test.KoinTestRule
-import org.koin.test.inject
 import kotlin.test.*
-import kotlin.test.assertNotNull
 
-class CreateUserTests : KoinTest {
-    private val userRepository: IUserRepository by inject()
-
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(userPersistenceModule)
-    }
-
+class CreateUserTests : UseCaseTestBase() {
     @Test
     fun execute_userNameNull_returnsErrorResultModel() {
         val password = "seCreT123"

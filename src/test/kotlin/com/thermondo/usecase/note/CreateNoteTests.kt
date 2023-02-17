@@ -5,27 +5,11 @@ import com.thermondo.domain.note.NoteType
 import com.thermondo.domain.user.Password
 import com.thermondo.domain.user.User
 import com.thermondo.domain.user.UserName
-import com.thermondo.persistence.note.notePersistenceModule
-import com.thermondo.persistence.user.userPersistenceModule
-import com.thermondo.usecase.note.abstraction.INoteRepository
-import com.thermondo.usecase.user.abstraction.IUserRepository
-import org.junit.Rule
+import com.thermondo.usecase.common.UseCaseTestBase
 import org.junit.Test
-import org.koin.test.KoinTest
-import org.koin.test.KoinTestRule
-import org.koin.test.inject
 import kotlin.test.*
-import kotlin.test.assertNotNull
 
-class CreateNoteTests : KoinTest {
-    private val noteRepository: INoteRepository by inject()
-    private val userRepository: IUserRepository by inject()
-
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        modules(userPersistenceModule, notePersistenceModule)
-    }
-
+class CreateNoteTests : UseCaseTestBase() {
     @Test
     fun execute_nonExistingAuthor_returnsErrorResultModel() {
         val nonExistingAuthorId = Id.generate().toString()

@@ -10,7 +10,8 @@ import com.thermondo.usecase.user.abstraction.IUserRepository
  * Use case class to create new users
  * @param userRepository repository to store and retrieve [User] objects
  */
-class CreateUser(private val userRepository: IUserRepository) : UseCase<CreateUser.RequestModel, CreateUser.ResultModel>() {
+class CreateUser(private val userRepository: IUserRepository)
+    : UseCase<CreateUser.RequestModel, CreateUser.ResultModel>() {
 
     // TODO inject IHashProvider for hashing the pw before storage
 
@@ -43,9 +44,11 @@ class CreateUser(private val userRepository: IUserRepository) : UseCase<CreateUs
         }
     }
 
-    class RequestModel(val userName: String?, val password: String?, val passwordRepetition: String?) : UseCase.RequestModel
+    class RequestModel(val userName: String?, val password: String?, val passwordRepetition: String?)
+        : UseCase.RequestModel
 
-    class ResultModel(val userId: String?, override val successful: Boolean, override val message: String) : UseCase.ResultModel {
+    class ResultModel(val userId: String?, override val successful: Boolean, override val message: String)
+        : UseCase.ResultModel {
         // TODO in real life, status message would be either localized here
         //  or have an id to be translated in consuming instance (e.g. frontend)
         companion object FactoryMethods {
