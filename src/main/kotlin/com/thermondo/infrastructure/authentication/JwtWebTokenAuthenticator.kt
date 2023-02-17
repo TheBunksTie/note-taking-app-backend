@@ -16,8 +16,8 @@ class JwtWebTokenAuthenticator : IAuthenticator {
 
     companion object Constants {
         // jwt config
-        private const val jwtIssuer = "com.thermondo.notes"
-        private const val jwtAudience = "com.thermondo.notes"
+        private const val jwtIssuer = "com.thermondo"
+        private const val jwtAudience = "com.thermondo"
         private const val jwtRealm = "com.thermondo.notes"
         // TODO obviously in production this would be retrieved from an encrypted source outside of code
         private const val jwtSecret = "secret"
@@ -34,6 +34,7 @@ class JwtWebTokenAuthenticator : IAuthenticator {
             .sign(Algorithm.HMAC256(jwtSecret))
 
     fun configureJwtBasedAuthentication(config: JWTAuthenticationProvider.Config) = with(config) {
+
         realm = jwtRealm
 
         verifier(JWT

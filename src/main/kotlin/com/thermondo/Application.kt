@@ -1,27 +1,26 @@
 package com.thermondo
 
-import io.ktor.serialization.kotlinx.json.json
-import io.ktor.server.application.Application
-import io.ktor.server.application.call
-import io.ktor.server.application.install
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.server.response.respondText
-import io.ktor.server.routing.get
-import io.ktor.server.routing.routing
+import com.thermondo.application.plugin.configureAuthentication
+import com.thermondo.application.plugin.configureDependencyInjection
+import com.thermondo.application.plugin.configureRouting
+import com.thermondo.application.plugin.configureSerialization
+import com.thermondo.application.routes.noteRouting
+import com.thermondo.application.routes.userRouting
+import io.ktor.server.application.*
+import io.ktor.server.routing.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 // NOTE: Referenced in application.conf
 @Suppress("unused")
 fun Application.module(testing: Boolean = false) {
-
-    install(ContentNegotiation) {
-        json()
-    }
+    configureRouting()
+    configureSerialization()
+    configureDependencyInjection()
+    configureAuthentication()
 
     routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
+        userRouting()
+        noteRouting()
     }
 }
